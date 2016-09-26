@@ -1,0 +1,125 @@
+#%RAML 0.8
+title: Steroids Data
+mediaType: application/json
+baseUri: https://rest-api.appgyver.com/v1
+
+traits:
+    - securedBySteroidsApiKey:
+        headers:
+          steroidsApiKey:
+            type: string
+            example: exampleapikey
+            default: adb4e0dedb073c5f0ed4f21d133a9158873842cfaf60d5a9966c2c516a86587a
+          steroidsAppId:
+            type: integer
+            example: 1234
+            default: 146152
+  
+schemas:
+  - Product_collection: '{"$schema":"http://json-schema.org/schema","title":"Product collection","type":"object","properties":{"objects":{"type":"array","items":{"$schema":"http://json-schema.org/schema","type":"object","description":"The canonical Product representation","properties":{"Rate":{"type":"integer"},"Pid":{"type":"integer"},"Uid":{"type":"integer"},"Name":{"type":"string"},"Description":{"type":"string"},"Rating":{"type":"integer"}},"required":[]}}}}'
+  - Product_member: '{"$schema":"http://json-schema.org/schema","type":"object","description":"The canonical Product representation","properties":{"object":{"type":"object","properties":{"Rate":{"type":"integer"},"Pid":{"type":"integer"},"Uid":{"type":"integer"},"Name":{"type":"string"},"Description":{"type":"string"},"Rating":{"type":"integer"}},"required":[]}}}'
+  - Users_collection: '{"$schema":"http://json-schema.org/schema","title":"Users collection","type":"object","properties":{"objects":{"type":"array","items":{"$schema":"http://json-schema.org/schema","type":"object","description":"The canonical Users representation","properties":{"Uid":{"type":"integer"},"Username":{"type":"string"}},"required":[]}}}}'
+  - Users_member: '{"$schema":"http://json-schema.org/schema","type":"object","description":"The canonical Users representation","properties":{"object":{"type":"object","properties":{"Uid":{"type":"integer"},"Username":{"type":"string"}},"required":[]}}}'
+
+resourceTypes:
+  - dolan_db_collection:
+      usage: This resourceType should be used for any collection of items
+      is: [ securedBySteroidsApiKey ]
+      get:
+        description: |
+          {
+            "action": "collection"
+          }
+        responses:
+          200:
+            description: |
+              {
+                "rootKey": "objects"
+              }
+            body:
+              application/json:
+                schema: <<resourcePathName>>_collection # e.g cars
+      post:
+        description: |
+          {
+            "action": "create",
+            "rootKey": "object"
+          }
+        body:
+          application/json:
+            schema: <<resourcePathName>>_member
+        responses:
+          200:
+            description: |
+              {
+                "rootKey": "object"
+              }
+            body:
+              application/json:
+                schema: <<resourcePathName>>_member # e.g. car
+
+  - dolan_db_member:
+      usage: This resourceType should be used for any built.io item
+      is: [ securedBySteroidsApiKey ]
+      get:
+        description: |
+          {
+            "action": "find"
+          }
+        responses:
+          200:
+            description: |
+              {
+                "rootKey": "object"
+              }
+            body:
+              application/json:
+                schema: <<resourcePathName>>_member # e.g. car
+      put:
+        description: |
+          {
+            "action": "update",
+            "rootKey": "object"
+          }
+        body:
+          application/json:
+            schema: <<resourcePathName>>_member
+        responses:
+          200:
+            description: |
+              {
+                "rootKey": "object"
+              }
+            body:
+              application/json:
+                schema: <<resourcePathName>>_member
+      delete:
+        description: |
+          {
+            "action": "destroy"
+          }
+        responses:
+          200:
+
+
+/Product:
+  description: |
+    {
+      "resourceName": "Product",
+      "identifierKey": "id"
+    }
+  type: dolan_db_collection
+  /{id}:
+    type: dolan_db_member
+
+/Users:
+  description: |
+    {
+      "resourceName": "Users",
+      "identifierKey": "id"
+    }
+  type: dolan_db_collection
+  /{id}:
+    type: dolan_db_member
+
+
