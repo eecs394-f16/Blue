@@ -1,0 +1,23 @@
+<div class="padding" ng-controller="SearchController">
+<super-navbar>
+    <super-navbar-title>
+      Results for {{search}}
+    </super-navbar-title>
+  </super-navbar>
+
+  {{#Results}}
+  <div class="list">
+<<<<<<< HEAD
+  	<a class="item" href="#" ng-click="getDetails()"></a>
+  				<img class='img-full' id='details-img' src='https://i.ytimg.com/vi/61aM0DXpKkc/maxresdefault.jpg'/>
+=======
+	<super-navigate location="rental#detail">
+  	<a class="item" ng-click="getDetails()">
+  				<img class='img-mini' id='details-img' src='https://i.ytimg.com/vi/61aM0DXpKkc/maxresdefault.jpg'/>
+>>>>>>> a7da27ee7ba4c07db493035f49c6fd6a1dcc9818
+{{username}} {{price}} {{distance}}
+  	</a>
+	</super-navigate>
+  </div>
+  {{/Results}}
+</div>
