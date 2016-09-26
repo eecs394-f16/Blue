@@ -1,0 +1,35 @@
+{
+  "preloads": [
+    {
+      "id": "learn-more",
+      "location": "http://localhost/app/example/learn-more.html"
+    },
+    {
+      "id": "using-the-scanner",
+      "location": "http://localhost/app/example/using-the-scanner.html"
+    }
+  ],
+  "tabs": [
+    {
+      "position": 0,
+      "id": "index",
+      "title": "Index",
+      "target_url": "http://localhost/app/rental/search.html"
+    },
+    {
+      "position": 1,
+      "id": "settings",
+      "title": "Settings",
+      "target_url": "http://localhost/app/example/settings.html"
+    },
+    {
+      "position": 2,
+      "id": "internet",
+      "title": "Internet",
+      "target_url": "http://google.com"
+    }
+  ],
+  "configuration": {
+    "extra_response_headers": {}
+  }
+}

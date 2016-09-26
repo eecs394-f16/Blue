@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<widget>
+  <access origin="*"/>
+  <preference name="AutoHideSplashScreen" value="false"/>
+  <preference name="fullscreen" value="false"/>
+</widget>

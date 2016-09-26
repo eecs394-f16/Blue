@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<widget>
+  <access origin="*"/>
+  <preference name="ViewIgnoresStatusBar" value="false"/>
+  <preference name="DisableDoubleTapToFocus" value="true"/>
+  <preference name="DisallowOverscroll" value="false"/>
+  <preference name="EnableViewportScale" value="false"/>
+  <preference name="EnablePopGestureRecognition" value="true"/>
+  <preference name="AllowInlineMediaPlayback" value="true"/>
+  <preference name="AutoHideSplashScreen" value="false"/>
+</widget>

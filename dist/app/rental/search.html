@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+  window.addEventListener('WebComponentsReady', function() {
+    supersonic.app.splashscreen.hide();
+  });
+  </script>
+  <!-- Cloud resource definition file for Supersonic Data -->
+  <script src="/cloud-resources.js"></script>
+  <meta charset="utf8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  <title>search</title>
+
+  <link rel="stylesheet" href="/components/supersonic/css/supersonic.css" />
+  <link rel="stylesheet" href="/app/common/stylesheets/application.css" />
+  <link rel="import" href="/components/supersonic/components/import.html">
+
+  <script src="http://localhost/cordova.js"></script>
+  <script src="/components/steroids-js/steroids.js"></script>
+  <script src="/components/angular/angular.js"></script>
+  <script src="/components/supersonic/supersonic.js"></script>
+  <script src="/components/webcomponentsjs/webcomponents-lite.js"></script>
+
+  
+  <script src="/app/common.js"></script>
+  
+  <script src="/app/rental.js"></script>
+  
+</head>
+<body ng-app="rental">
+
+<div class="padding" ng-controller="SearchController">
+<super-navbar>
+    <super-navbar-title>
+      Results for {{search}}
+    </super-navbar-title>
+  </super-navbar>
+
+  {{#Results}}
+  <div class="list">
+<<<<<<< HEAD
+  	<a class="item" href="#" ng-click="getDetails()"></a>
+  				<img class='img-full' id='details-img' src='https://i.ytimg.com/vi/61aM0DXpKkc/maxresdefault.jpg'/>
+=======
+	<super-navigate location="rental#detail">
+  	<a class="item" ng-click="getDetails()">
+  				<img class='img-mini' id='details-img' src='https://i.ytimg.com/vi/61aM0DXpKkc/maxresdefault.jpg'/>
+>>>>>>> a7da27ee7ba4c07db493035f49c6fd6a1dcc9818
+{{username}} {{price}} {{distance}}
+  	</a>
+	</super-navigate>
+  </div>
+  {{/Results}}
+</div>
+
+
+</body>
+</html>
