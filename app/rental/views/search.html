@@ -4,17 +4,23 @@
       Results for {{search}}
     </super-navbar-title>
   </super-navbar>
+ {{#Results}}
+  <div class="list list-inset">
+  <label class="item item-input">
+    <i class="icon super-search placeholder-icon"></i>
+    <input type="text" placeholder="Paddleboards">
+  </label>
+ 
 
-  {{#Results}}
-  <div class="list">
-  	<a class="item" href="#" ng-click="getDetails()"></a>
-  		<img class='img-mini' id='details-img' src='https://i.ytimg.com/vi/61aM0DXpKkc/maxresdefault.jpg'/>
-	<super-navigate location="rental#detail">
-  	<a class="item" ng-click="getDetails()">
-  		<img class='img-mini' id='details-img' src='https://i.ytimg.com/vi/61aM0DXpKkc/maxresdefault.jpg'/>
+  <super-navigate location="rental#detail">
+    <a class="item" ng-click="getDetails()">
+          <img class='img-mini' id='details-img' src='https://i.ytimg.com/vi/61aM0DXpKkc/maxresdefault.jpg'/>
 {{username}} {{price}} {{distance}}
-  	</a>
-	</super-navigate>
-  </div>
-  {{/Results}}
+    </a>
+  </super-navigate>
+  
+ 
+
+</div>
+ {{/Results}}
 </div>
