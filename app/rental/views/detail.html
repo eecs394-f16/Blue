@@ -1,14 +1,14 @@
 <div ng-controller="DetailController"  ng-attr-location="rental#detail">
 
 	<super-navbar>
-		<super-navbar-title>List title here</super-navbar-title>
+		<super-navbar-title>{{productName}}</super-navbar-title>
 	</super-navbar>
 	<div class="padding">
 		<img class='img-full' id='details-img' src='https://i.ytimg.com/vi/61aM0DXpKkc/maxresdefault.jpg'/>
 		<div class="details">
 			<p id='details-name'>{{productName}}</p>
 			<p id='details-owner'>{{username}}</p>
-			<p id='details-price'>${{rate}}/hour</p>
+			<p id='details-price'>${{productRate}}/hour</p>
 			<p id='details-rating'>{{productRating}}</p>
 			<div>
 				<p id='details-discription'>{{productDescription}}</p>

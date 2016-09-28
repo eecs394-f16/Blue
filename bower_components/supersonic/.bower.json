@@ -1,0 +1,34 @@
+{
+  "name": "supersonic",
+  "version": "1.13.2",
+  "homepage": "https://github.com/AppGyver/supersonic",
+  "authors": [
+    "Eevert Saukkokoski <eevert.saukkokoski@appgyver.com>",
+    "Juha Suuraho <juha.suuraho@appgyver.com>",
+    "Petrus Repo <petrus.repo@appgyver.com>"
+  ],
+  "description": "A toolkit for turbocharged Steroids applications",
+  "main": "supersonic.js",
+  "keywords": [
+    "steroids",
+    "steroids-js",
+    "ui",
+    "supersonic",
+    "angular"
+  ],
+  "license": "MIT",
+  "ignore": [],
+  "dependencies": {
+    "webcomponentsjs": "0.7.22",
+    "steroids-js": "^3.5.20"
+  },
+  "_release": "1.13.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.13.2",
+    "commit": "7010bec1dfb5a5a09d03c1c850703954a54bd7fc"
+  },
+  "_source": "https://github.com/AppGyver/supersonic-bower.git",
+  "_target": "1.x",
+  "_originalSource": "supersonic"
+}
