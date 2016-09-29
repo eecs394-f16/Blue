@@ -27,9 +27,16 @@ angular
             
             supersonic.ui.dialog.confirm("", options).then(function(index) {
                 if (index === 0) {
+                     function sendRequest(Pid, Uid) {
+                      	var newRequestKey = firebase.database().ref('request').push().key;
+                      	firebase.database().ref('request/' + newRequestKey).update({
+                        		renter: 'user1'
+                      	});
+                    }
+                  sendRequest(1234, 4321);
                     var view = new supersonic.ui.View("rental#inbox");
                     supersonic.ui.layers.push(view);
-                    } else {
+                 } else {
                         supersonic.logger.log("no rent");
                         }
                         });
@@ -59,14 +66,14 @@ angular
   });
 angular
   .module('rental')
-  .controller('SearchController', [$scope, function($scope, supersonic) {
+  .controller('SearchController', function($scope, supersonic) {
+    
     $scope.navbarTitle = "Search";
     
     $scope.getInput = function() {
       
-      supersonic.ui.dialog.alert("here", options).then(function() {
-        supersonic.logger.log("Alert closed");
-        });
+        supersonic.logger.debug("Alert closed");
+        supersonic.logger.debug($scope.searchInput);  
     };
 
     $scope.getDetails = function() {
@@ -83,4 +90,4 @@ angular
             localStorage.setItem('productRating', Products[0].Rating);
             });
         };
-  }]);
+  });

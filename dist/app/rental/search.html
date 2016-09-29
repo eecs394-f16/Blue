@@ -8,6 +8,18 @@
   </script>
   <!-- Cloud resource definition file for Supersonic Data -->
   <script src="/cloud-resources.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.4.1/firebase.js"></script>
+  <script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAl_C5st81pnjm_gDug6CslEqn5ZEwoXaA",
+    authDomain: "blue-de4d9.firebaseapp.com",
+    databaseURL: "https://blue-de4d9.firebaseio.com",
+    storageBucket: "blue-de4d9.appspot.com",
+    messagingSenderId: "755315331300"
+  };
+  firebase.initializeApp(config);
+  </script>
   <meta charset="utf8">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
@@ -41,8 +53,8 @@
   <div class="list list-inset">
   <label class="item item-input">
     <i class="icon super-search placeholder-icon"></i>
-    <form ng-submit="getInput()" ng-controller="SearchController">
-        <input type="text" placeholder="Search" ng-model="searchInput" name="query">
+    <form novalidate ng-submit="getInput()">
+        <input type="text" placeholder="Search" ng-model="searchInput" ng-model-options="{ updateOn: 'blur' }"  name="search">
     </form>
   </label>
    

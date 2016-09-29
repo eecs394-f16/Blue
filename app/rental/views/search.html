@@ -8,8 +8,8 @@
   <div class="list list-inset">
   <label class="item item-input">
     <i class="icon super-search placeholder-icon"></i>
-    <form ng-submit="getInput()" ng-controller="SearchController">
-        <input type="text" placeholder="Search" ng-model="searchInput" name="query">
+    <form novalidate ng-submit="getInput()">
+        <input type="text" placeholder="Search" ng-model="searchInput" ng-model-options="{ updateOn: 'blur' }"  name="search">
     </form>
   </label>
    

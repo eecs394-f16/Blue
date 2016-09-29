@@ -1,13 +1,13 @@
 angular
   .module('rental')
-  .controller('SearchController', [$scope, function($scope, supersonic) {
+  .controller('SearchController', function($scope, supersonic) {
+    
     $scope.navbarTitle = "Search";
     
     $scope.getInput = function() {
       
-      supersonic.ui.dialog.alert("here", options).then(function() {
-        supersonic.logger.log("Alert closed");
-        });
+        supersonic.logger.debug("Alert closed");
+        supersonic.logger.debug($scope.searchInput);  
     };
 
     $scope.getDetails = function() {
@@ -24,4 +24,4 @@ angular
             localStorage.setItem('productRating', Products[0].Rating);
             });
         };
-  }]);
+  });
