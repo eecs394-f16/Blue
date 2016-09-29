@@ -24,9 +24,9 @@
     },
     {
       "position": 2,
-      "id": "internet",
-      "title": "Internet",
-      "target_url": "http://google.com"
+      "id": "inbox",
+      "title": "Inbox",
+      "target_url": "http://localhost/app/rental/inbox.html"
     }
   ],
   "configuration": {
