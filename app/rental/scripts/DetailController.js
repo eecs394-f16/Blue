@@ -24,7 +24,7 @@ angular
                       	});
                     }
                   sendRequest(1234, 4321);
-                    var view = new supersonic.ui.View("rental#inbox?id=4");
+                    var view = new supersonic.ui.View("rental#inbox");
                     supersonic.ui.layers.push(view);
                  } else {
                         supersonic.logger.log("no rent");
