@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="/components/supersonic/css/supersonic.css" />
   <link rel="stylesheet" href="/app/common/stylesheets/application.css" />
   <link rel="import" href="/components/supersonic/components/import.html">
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 
   <script src="http://localhost/cordova.js"></script>
   <script src="/components/steroids-js/steroids.js"></script>
@@ -44,36 +45,45 @@
 <body ng-app="rental">
 
 <div class="padding" ng-controller="SearchController">
-    <super-navbar>
-    <super-navbar-title>
-      {{navbarTitle}}
-    </super-navbar-title>
-    </super-navbar>
+	<super-navbar>
+		<super-navbar-title>{{navbarTitle}}</super-navbar-title>
+	</super-navbar>
 
-  <div class="list list-inset">
-  <label class="item item-input">
-    <i class="icon super-search placeholder-icon"></i>
-    <form novalidate ng-submit="getInput()">
-        <input type="text" placeholder="Search" ng-model="searchInput" id="search">
-    </form>
-  </label>
+	<div class="list list-inset">
+		<label class="item item-input">
+			<i class="icon super-search placeholder-icon"></i>
+			    <form novalidate ng-submit="getInput()">
+                    <input type="text" placeholder="Search" ng-model="searchInput" id="search">
+                </form>
+		</label>
    
-   <ul>
-    <li ng-repeat="result in searchResults">
-        <super-navigate location="rental#detail" data-params-id="{{result.Pid}}">
-        <a class="item">
-          <img class='img-mini' id='details-img' src='{{result.img}}'/>
-            {{result.Name}} <br/>
-            ${{result.Rate}}/hr <br/>
-            {{result.Description}}
-        </a>
-        </super-navigate>
-    </li>
-    <li ng-show="!searchResults.length">
-      <div class="no-results"> No results found... </div>
-    </li>
-   </ul>
-</div>
+		<ul>
+			<li ng-repeat="result in searchResults">
+				<super-navigate location="rental#detail" data-params-id="{{ result.Pid }}">
+					<a class="item">
+						<img style='display: inline-block' class='img-mini' id='details-img' src='{{result.img}}'/>
+						<table class="details" style='display:inline-block'>
+							<tr>
+								<td><i class="icon super-pricetag"></i></td>
+								<td>{{result.Name}}</td>
+							</tr>
+							<tr>
+								<td><i class="icon super-social-usd"></i></td>
+								<td>{{result.Rate}}/hr</td>
+							</tr>
+							<tr>
+								<td><i class="icon super-star"></i></td>
+								<td>{{result.Description}}</td>
+							</tr>
+						</table>
+					</a>
+				</super-navigate>
+			</li>
+			<li ng-show="!searchResults.length">
+                <div class="no-results"> No results found... </div>
+            </li>
+		</ul>
+	</div>
 </div>
 
 
