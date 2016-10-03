@@ -1,32 +1,41 @@
 <div class="padding" ng-controller="SearchController">
-    <super-navbar>
-    <super-navbar-title>
-      {{navbarTitle}}
-    </super-navbar-title>
-    </super-navbar>
+	<super-navbar>
+		<super-navbar-title>{{navbarTitle}}</super-navbar-title>
+	</super-navbar>
 
-  <div class="list list-inset">
-  <label class="item item-input">
-    <i class="icon super-search placeholder-icon"></i>
-    <form novalidate ng-submit="getInput()">
-        <input type="text" placeholder="Search" ng-model="searchInput" ng-model-options="{ updateOn: 'blur' }"  name="search">
-    </form>
-  </label>
+	<div class="list list-inset">
+		<label class="item item-input">
+			<i class="icon super-search placeholder-icon"></i>
+			<form novalidate ng-submit="getInput()">
+				<input type="text" placeholder="Search" ng-model="searchInput" ng-model-options="{ updateOn: 'blur' }"  name="search">
+			</form>
+		</label>
    
-   <ul>
-    <li ng-repeat="result in searchResults">
-        <super-navigate location="rental#detail"  data-params-id="{{ result.Pid }}">
-        <a class="item">
-          <img class='img-mini' id='details-img' src='https://i.ytimg.com/vi/61aM0DXpKkc/maxresdefault.jpg'/>
-            {{result.Name}} <br/>
-            ${{result.Rate}}/hr <br/>
-            {{result.Description}}
-        </a>
-        </super-navigate>
-    </li>
-    <li ng-if="results.length === 0">
-      <strong>No results found...</strong>
-    </li>
-   </ul>
-</div>
+		<ul>
+			<li ng-repeat="result in searchResults">
+				<super-navigate location="rental#detail"  data-params-id="{{ result.Pid }}">
+					<a class="item">
+						<img style='display: inline-block' class='img-mini' id='details-img' src='https://i.ytimg.com/vi/61aM0DXpKkc/maxresdefault.jpg'/>
+						<table class="details" style='display:inline-block'>
+							<tr>
+								<td><i class="icon super-pricetag"></i></td>
+								<td>{{result.Name}}</td>
+							</tr>
+							<tr>
+								<td><i class="icon super-social-usd"></i></td>
+								<td>{{result.Rate}}/hr</td>
+							</tr>
+							<tr>
+								<td><i class="icon super-star"></i></td>
+								<td>{{result.Description}}</td>
+							</tr>
+						</table>
+					</a>
+				</super-navigate>
+			</li>
+			<li ng-if="results.length === 0">
+				<strong>No results found...</strong>
+			</li>
+		</ul>
+	</div>
 </div>

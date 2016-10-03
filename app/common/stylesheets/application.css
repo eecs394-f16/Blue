@@ -4,6 +4,15 @@
   font-weight: 600;
 }
 
+.details td {
+	padding: 5px;
+	font-family: 'Raleway', sans-serif;
+}
+#details-name {
+	font-size: 32px;
+	padding-bottom: 4px;
+}
+
 .img-full {
 	width: 100%;
 }
