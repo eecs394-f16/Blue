@@ -3,16 +3,25 @@
 	<super-navbar>
 		<super-navbar-title>{{productName}}</super-navbar-title>
 	</super-navbar>
+	<img class='img-full' id='details-img' src='https://i.ytimg.com/vi/61aM0DXpKkc/maxresdefault.jpg'/>
 	<div class="padding">
-		<img class='img-full' id='details-img' src='https://i.ytimg.com/vi/61aM0DXpKkc/maxresdefault.jpg'/>
-		<div class="details">
-			<p id='details-name'>{{productName}}</p>
-			<p id='details-owner'>{{username}}</p>
-			<p id='details-price'>${{productRate}}/hour</p>
-			<p id='details-rating'>{{productRating}}</p>
-			<div>
-				<p id='details-discription'>{{productDescription}}</p>
-			</div>
-		</div>
+		<table class="details">
+			<tr>
+				<td colspan="2" id="details-name">{{productName}}</td>
+			</tr>
+			<tr>
+				<td><i class="icon super-person"></i></td>
+				<td id="details-owner">{{username}}</td>
+			</tr>
+			<tr>
+				<td><i class="icon super-social-usd"></i></td>
+				<td id="details-price">{{productRate}}/hour</td>
+			</tr>
+			<tr>
+				<td><i class="icon super-drag"></i></td>
+				<td id="details-description">{{productDescription}}</td>
+			</tr>
+		</table>
+		<p id='details-rating'>{{productRating}}</p>
 	<button class="button button-block button-positive" ng-click="rentItem()">Rent now!</button>
 </div>
