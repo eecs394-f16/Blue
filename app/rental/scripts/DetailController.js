@@ -24,7 +24,7 @@ angular
                     });
                 }
                 sendRequest(1234, 4321);
-                supersonic.ui.tabs.select(2);
+                supersonic.ui.tabs.select(1);
             } else {
                 supersonic.logger.log("no rent");
             }

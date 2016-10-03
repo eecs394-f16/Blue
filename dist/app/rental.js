@@ -25,16 +25,22 @@ angular
             buttonLabels: ["Yes", "No"]
             };
             
-            supersonic.ui.dialog.confirm("", options).then(function(index) {
-                if (index === 0) {
-                    var view = new supersonic.ui.View("rental#inbox");
-                    supersonic.ui.layers.push(view);
-                    } else {
-                        supersonic.logger.log("no rent");
-                        }
-                        });
-            };
-  });
+        supersonic.ui.dialog.confirm("", options).then(function (index) {
+            if (index === 0) {
+                function sendRequest(Pid, Uid) {
+                    var newRequestKey = firebase.database().ref('request').push().key;
+                    firebase.database().ref('request/' + newRequestKey).update({
+                        renter: 'user1'
+                    });
+                }
+                sendRequest(1234, 4321);
+                supersonic.ui.tabs.select(1);
+            } else {
+                supersonic.logger.log("no rent");
+            }
+        });
+    };
+});
 
 angular
   .module('rental')
