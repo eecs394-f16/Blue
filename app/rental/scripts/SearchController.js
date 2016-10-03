@@ -3,7 +3,7 @@ angular
   .controller('SearchController', function($scope, supersonic) {
 
     $scope.navbarTitle = "Search";
-    
+    $scope.searchResult = undefined;
     $scope.getInput = function() {
       
         supersonic.logger.debug($scope.searchInput);
@@ -16,19 +16,4 @@ angular
          ];
         
     };
-
-    $scope.getDetails = function(Pid) {
-
-        supersonic.data.model('Product').findAll({query: JSON.stringify({"Pid": Pid})}).then(function(Products) {
-            supersonic.logger.debug(Pid);
-            supersonic.data.model('Users').findAll({query: JSON.stringify({"Uid": Products[0].Uid})}).then(function(Users) {
-
-            localStorage.setItem('user', Users[0].Username);
-            });
-            localStorage.setItem('productName', Products[0].Name);
-            localStorage.setItem('productRate', Products[0].Rate);
-            localStorage.setItem('productDescription', Products[0].Description);
-            localStorage.setItem('productRating', Products[0].Rating);
-            });
-        };
   });

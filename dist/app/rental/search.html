@@ -69,8 +69,8 @@
         </a>
         </super-navigate>
     </li>
-    <li ng-if="results.length === 0">
-      <strong>No results found...</strong>
+    <li ng-show="!searchResults.length">
+      <div class="no-results"> No results found... </div>
     </li>
    </ul>
 </div>

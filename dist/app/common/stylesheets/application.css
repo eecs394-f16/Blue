@@ -10,3 +10,9 @@
 .img-mini {
 	width: 30%;
 }
+
+.no-results {
+	padding: 10px;
+	color: #63717f;
+	font-style: italic;
+}

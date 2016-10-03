@@ -2,12 +2,6 @@ angular
   .module('rental')
   .controller('DetailController', function($scope, supersonic) {
 
-    //$scope.username= localStorage.getItem('user');
-    //$scope.productRate=localStorage.getItem('productRate');
-    //$scope.productRating=localStorage.getItem('productRating');
-    //$scope.productName=localStorage.getItem('productName');
-    //$scope.productDescription=localStorage.getItem('productDescription');
-
     $scope.productId = undefined;
 
     var _refreshListing = function () {
@@ -16,8 +10,9 @@ angular
         
         $scope.$apply( function () {
             
-            supersonic.data.model('Users').findAll({query: JSON.stringify({"Uid": Products[0].Uid})}).then(function(Users) {
+            supersonic.data.model('Users').findAll({query: JSON.stringify({"Uid": parseInt(Products[0].Uid)})}).then(function(Users) {
 
+            supersonic.logger.debug(Users);
             $scope.username = Users[0].Username;
             });
             $scope.productName = Products[0].Name;
