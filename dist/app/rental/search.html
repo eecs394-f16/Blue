@@ -46,7 +46,7 @@
 <div class="padding" ng-controller="SearchController">
     <super-navbar>
     <super-navbar-title>
-      Results for {{search}}
+      {{navbarTitle}}
     </super-navbar-title>
     </super-navbar>
 
@@ -58,14 +58,21 @@
     </form>
   </label>
    
-  <super-navigate location="rental#detail">
-    <a class="item" ng-click="getDetails()">
+   <ul>
+    <li ng-repeat="result in searchResults">
+        <super-navigate location="rental#detail"  data-params-id="{{ result.Pid }}">
+        <a class="item">
           <img class='img-mini' id='details-img' src='https://i.ytimg.com/vi/61aM0DXpKkc/maxresdefault.jpg'/>
-{{username}} {{price}} {{distance}}
-    </a>
-  </super-navigate>
-  
-
+            {{result.Name}} <br/>
+            ${{result.Rate}}/hr <br/>
+            {{result.Description}}
+        </a>
+        </super-navigate>
+    </li>
+    <li ng-if="results.length === 0">
+      <strong>No results found...</strong>
+    </li>
+   </ul>
 </div>
 </div>
 
