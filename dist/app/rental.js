@@ -55,6 +55,7 @@ angular
             buttonLabels: ["Yes", "No"]
             };
             
+<<<<<<< HEAD
             supersonic.ui.dialog.confirm("", options).then(function(index) {
                 if (index === 0) {
                      var sendRequest = function (Pid, Uid) {
@@ -72,6 +73,24 @@ angular
                         });
             };
   });
+=======
+        supersonic.ui.dialog.confirm("", options).then(function (index) {
+            if (index === 0) {
+                function sendRequest(Pid, Uid) {
+                    var newRequestKey = firebase.database().ref('request').push().key;
+                    firebase.database().ref('request/' + newRequestKey).update({
+                        renter: 'user1'
+                    });
+                }
+                sendRequest(1234, 4321);
+                supersonic.ui.tabs.select(1);
+            } else {
+                supersonic.logger.log("no rent");
+            }
+        });
+    };
+});
+>>>>>>> origin/master
 
 angular
   .module('rental')

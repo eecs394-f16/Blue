@@ -55,7 +55,7 @@ angular
                     };
                   sendRequest(1234, 4321);
                     var view = new supersonic.ui.View("rental#inbox");
-                    supersonic.ui.layers.push(view);
+                    supersonic.ui.tabs.select(1);
                  } else {
                         supersonic.logger.log("no rent");
                         }

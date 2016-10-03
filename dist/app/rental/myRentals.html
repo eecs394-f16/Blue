@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+  window.addEventListener('WebComponentsReady', function() {
+    supersonic.app.splashscreen.hide();
+  });
+  </script>
+  <!-- Cloud resource definition file for Supersonic Data -->
+  <script src="/cloud-resources.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.4.1/firebase.js"></script>
+  <script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAl_C5st81pnjm_gDug6CslEqn5ZEwoXaA",
+    authDomain: "blue-de4d9.firebaseapp.com",
+    databaseURL: "https://blue-de4d9.firebaseio.com",
+    storageBucket: "blue-de4d9.appspot.com",
+    messagingSenderId: "755315331300"
+  };
+  firebase.initializeApp(config);
+  </script>
+  <meta charset="utf8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  <title>myRentals</title>
+
+  <link rel="stylesheet" href="/components/supersonic/css/supersonic.css" />
+  <link rel="stylesheet" href="/app/common/stylesheets/application.css" />
+  <link rel="import" href="/components/supersonic/components/import.html">
+
+  <script src="http://localhost/cordova.js"></script>
+  <script src="/components/steroids-js/steroids.js"></script>
+  <script src="/components/angular/angular.js"></script>
+  <script src="/components/supersonic/supersonic.js"></script>
+  <script src="/components/webcomponentsjs/webcomponents-lite.js"></script>
+
+  
+  <script src="/app/common.js"></script>
+  
+  <script src="/app/rental.js"></script>
+  
+</head>
+<body ng-app="rental">
+
+<div ng-controller="InboxController" class="padding">
+	<super-navbar>
+		<super-navbar-title>My Rentals</super-navbar-title>
+	</super-navbar>
+	<div class="list list-inset">
+ 		<super-navigate>
+			<a class="item" ng-click="getDetails()">
+				<img class='img-mini' id='details-img' src='https://i.ytimg.com/vi/61aM0DXpKkc/maxresdefault.jpg'/>
+				<div style="display: inline-block">
+					<p>5 stars</p>
+					<p>Mr Ng</p>
+					<p>Pick-up at Noyes</p>
+				</div>
+			</a>
+		</super-navigate>
+	</div>
+</div>
+
+
+</body>
+</html>

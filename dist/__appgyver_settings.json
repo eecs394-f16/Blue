@@ -13,20 +13,14 @@
     {
       "position": 0,
       "id": "index",
-      "title": "Index",
+      "title": "Home",
       "target_url": "http://localhost/app/rental/search.html"
     },
     {
       "position": 1,
-      "id": "settings",
-      "title": "Settings",
-      "target_url": "http://localhost/app/example/settings.html"
-    },
-    {
-      "position": 2,
       "id": "inbox",
-      "title": "Inbox",
-      "target_url": "http://localhost/app/rental/inbox.html"
+      "title": "My Rentals",
+      "target_url": "http://localhost/app/rental/myRentals.html"
     }
   ],
   "configuration": {
