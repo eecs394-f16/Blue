@@ -12,7 +12,6 @@ angular
             
             supersonic.data.model('Users').findAll({query: JSON.stringify({"Uid": parseInt(Products[0].Uid)})}).then(function(Users) {
 
-            supersonic.logger.debug(Users);
             $scope.username = Users[0].Username;
             });
             $scope.productName = Products[0].Name;
@@ -49,8 +48,7 @@ angular
                       	});
                     };
                   sendRequest(1234, 4321);
-                    var view = new supersonic.ui.View("rental#inbox");
-                    supersonic.ui.tabs.select(1);
+                     supersonic.ui.tabs.select(1);
                  } else {
                         supersonic.logger.log("no rent");
                         }
