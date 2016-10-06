@@ -6,7 +6,7 @@ angular
     $scope.searchResult = undefined;
     $scope.getInput = function() {
 
-        document.activeElement.blur();
+        document.activeElement.blur(); 
          $http({
           method : "GET",
           url : "http://naybro-node.mybluemix.net/name",

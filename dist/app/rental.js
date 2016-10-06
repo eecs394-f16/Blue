@@ -10,25 +10,37 @@ angular
 
 angular
   .module('rental')
-  .controller('DetailController', function($scope, supersonic) {
+  .controller('DetailController', function($scope, supersonic, $http) {
 
     $scope.productId = undefined;
 
     var _refreshListing = function () {
-
-       supersonic.data.model('Product').findAll({query: JSON.stringify({"Pid": parseInt($scope.productId)})}).then(function(Products) {
         
-        $scope.$apply( function () {
-            
-            supersonic.data.model('Users').findAll({query: JSON.stringify({"Uid": parseInt(Products[0].Uid)})}).then(function(Users) {
-
-            $scope.username = Users[0].Username;
+        $http({
+            method : "GET",
+            url : "http://naybro-node.mybluemix.net/details",
+            params: {
+                pid : $scope.productId
+            }})
+        .then(function(response) {
+                
+            $scope.searchResults = response.data[0];
+            supersonic.logger.debug($scope.searchResults);
+            $scope.productName = $scope.searchResults.Name;
+            $scope.productRate = $scope.searchResults.Rate;
+            $scope.productDescription = $scope.searchResults.Description;
+            $scope.img = $scope.searchResults.Img;
+            $http({
+                method : "GET",
+                url : "http://naybro-node.mybluemix.net/user",
+                params : {
+                    uid : $scope.searchResults.Uid
+                }})
+            .then(function(response) {
+                
+                $scope.username = response.data[0].Username;
+                });
             });
-            $scope.productName = Products[0].Name;
-            $scope.productRate = Products[0].Rate;
-            $scope.productDescription = Products[0].Description;
-            });
-        });
        };
 
     supersonic.ui.views.current.whenVisible( function () {
@@ -95,7 +107,7 @@ angular
     $scope.searchResult = undefined;
     $scope.getInput = function() {
 
-        document.activeElement.blur();
+        document.activeElement.blur(); 
          $http({
           method : "GET",
           url : "http://naybro-node.mybluemix.net/name",
