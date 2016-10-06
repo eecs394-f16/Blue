@@ -1,0 +1,5 @@
+---
+applications:
+- name:    naybro-node
+  host:    naybro-node
+  disk_quota: 1024M
