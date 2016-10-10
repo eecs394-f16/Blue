@@ -67,6 +67,36 @@ app.get('/user', function(req, res){
 });
 
 
+//query by user id for getting the my rentals
+
+app.get('/rentals', function(req, res){
+        var query = "select * , 'renter' from rentals where Uid1 = " + req.query.uid + " UNION select *, 'rentee' from rentals where uid2 = " + req.query.uid + " ORDER BY initialTime DESC";    connection.query(query, function(err, rows, fields) {
+        if (err) {
+            console.log('Error: ' + err);
+            res.status(404).send('Not found');
+        } else {
+            res.set('Access-Control-Allow-Origin', '*');
+            res.set('Access-Control-Allow-Methods', '["GET"]');
+            res.json(rows);
+        }
+    });
+});
+
+app.post('/request', function(req, res) {
+
+var date = new Date();
+var query = "INSERT INTO rentals ( Uid1, Pid, status, initialTime, hoursRented, Uid2) VALUES (" +req.uid1+", "+req.pid+", requested, "+date+", "+req.hours+", "+req.uid2+")";
+connection.query(query, function(err) {
+if (err) {
+console.log('Error: ' +err);
+res.status(404).send('Not found');
+}
+else{res.end("Request successful");}
+});
+});
+
+
+
 /*app.get('/name', function(req, res){
     response.writeHead(200, {"Content-Type": "text/plain"});
     response.end("Hello WorldPPPP!\n");
