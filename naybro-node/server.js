@@ -12,6 +12,9 @@ mysqlCreds = {
 
 var express = require("express"),
     app = express();
+var bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 var port = process.env.VCAP_APP_PORT || 8080;
 
@@ -66,9 +69,27 @@ app.get('/user', function(req, res){
     });
 });
 
+app.post('/request', function(req, res) {
+
+                var date = new Date();
+                var uid1 = req.body.uid1;
+                var pid = req.body.pid;
+                var hours = req.body.hours;
+                var uid2 = req.body.uid2;
+                date = date.toISOString();
+                date= date.slice(0, 10)+" "+date.slice(11, 19);
+                var query = "INSERT INTO rentals ( Uid1, Pid, status, initialTime, hoursRented, Uid2) VALUES ("+uid1+", "+pid+", 'requested', '"+date+"', "+hours+", "+uid2+")";
+                connection.query(query, function(err,rows) {
+                                if (err) {
+                                                console.log('Error: ' +err);
+                                                res.status(404).send(query);
+                                } else {
+                                                res.json(rows);
+                                }
+                });
+});
 
 //query by user id for getting the my rentals
-
 app.get('/rentals', function(req, res){
         var query = "select * , 'renter' from rentals where Uid1 = " + req.query.uid + " UNION select *, 'rentee' from rentals where uid2 = " + req.query.uid + " ORDER BY initialTime DESC";    connection.query(query, function(err, rows, fields) {
         if (err) {
@@ -80,19 +101,6 @@ app.get('/rentals', function(req, res){
             res.json(rows);
         }
     });
-});
-
-app.post('/request', function(req, res) {
-
-var date = new Date();
-var query = "INSERT INTO rentals ( Uid1, Pid, status, initialTime, hoursRented, Uid2) VALUES (" +req.uid1+", "+req.pid+", requested, "+date+", "+req.hours+", "+req.uid2+")";
-connection.query(query, function(err) {
-if (err) {
-console.log('Error: ' +err);
-res.status(404).send('Not found');
-}
-else{res.end("Request successful");}
-});
 });
 
 
