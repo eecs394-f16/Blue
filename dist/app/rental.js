@@ -25,7 +25,6 @@ angular
         .then(function(response) {
                 
             $scope.searchResults = response.data[0];
-            supersonic.logger.debug($scope.searchResults);
             $scope.productName = $scope.searchResults.Name;
             $scope.productRate = $scope.searchResults.Rate;
             $scope.productDescription = $scope.searchResults.Description;
@@ -120,4 +119,41 @@ angular
         });
         
     };
+  });
+
+angular
+  .module('rental')
+  .controller('myRentalsController', function ($scope, supersonic, $http, $q) {
+
+      $scope.rentalsResults = [];
+
+      $scope.loadRentals = function () {
+          $http({
+              method: "GET",
+              url: "http://naybro-node.mybluemix.net/rentals",
+              params: {
+                  uid: 2
+              }
+          }).then(function (response) {
+              $scope.rentalsResults = response.data;
+              for (var i = 0; i < $scope.rentalsResults.length; i++) {
+                  $http({
+                      method: "GET",
+                      url: "http://naybro-node.mybluemix.net/details",
+                      params: {
+                          pid: $scope.rentalsResults[i].Pid
+                      }
+                  }).then(function (responseP) {
+                      name = responseP.data[0].Name;
+                      img = responseP.data[0].Img;
+                      for (var j = 0; j < $scope.rentalsResults.length; j++) {
+                          if ($scope.rentalsResults[j].Pid == responseP.data[0].Pid) {
+                              $scope.rentalsResults[j].img = img;
+                              $scope.rentalsResults[j].name = name;
+                          }
+                      }
+                  });
+              }
+          });
+      };
   });
