@@ -43,8 +43,28 @@ angular
       _refreshListing();
     });
     
-    $scope.rentItem = function() {
+    $scope.postRental = function() {
         
+        $http({
+            method: 'GET',
+            url: 'http://naybro-node.mybluemix.net/request',
+            headers: { 'Content-Type': 'application/json' } ,
+            params : {
+                uid1: $scope.searchResults.Uid,
+                pid: $scope.productId,
+                uid2: 1,
+                hours: 6
+                }
+            }).then(function(response) {
+                    supersonic.logger.debug(response);
+                },
+                function (response) {
+                    supersonic.logger.debug(response);
+                });
+    };
+    
+    $scope.rentItem = function() {
+
         var options = {
             message: "Confirm to rent item ?",
             buttonLabels: ["Yes", "No"]
@@ -52,17 +72,12 @@ angular
             
             supersonic.ui.dialog.confirm("", options).then(function(index) {
                 if (index === 0) {
-                     var sendRequest = function (Pid, Uid) {
-                      	var newRequestKey = firebase.database().ref('request').push().key;
-                      	firebase.database().ref('request/' + newRequestKey).update({
-                        		renter: 'user1'
-                      	});
-                    };
-                  sendRequest(1234, 4321);
-                     supersonic.ui.tabs.select(1);
+                    
+                    $scope.postRental();
+                    supersonic.ui.tabs.select(1);
                  } else {
                         supersonic.logger.log("no rent");
                         }
-                        });
+                });
             };
   });

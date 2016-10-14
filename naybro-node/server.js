@@ -69,20 +69,20 @@ app.get('/user', function(req, res){
     });
 });
 
-app.post('/request', function(req, res) {
+app.get('/request', function(req, res) {
 
                 var date = new Date();
-                var uid1 = req.body.uid1;
-                var pid = req.body.pid;
-                var hours = req.body.hours;
-                var uid2 = req.body.uid2;
+                var uid1 = req.query.uid1;
+                var pid = req.query.pid;
+                var hours = req.query.hours;
+                var uid2 = req.query.uid2;
                 date = date.toISOString();
                 date= date.slice(0, 10)+" "+date.slice(11, 19);
                 var query = "INSERT INTO rentals ( Uid1, Pid, status, initialTime, hoursRented, Uid2) VALUES ("+uid1+", "+pid+", 'requested', '"+date+"', "+hours+", "+uid2+")";
                 connection.query(query, function(err,rows) {
                                 if (err) {
                                                 console.log('Error: ' +err);
-                                                res.status(404).send(query);
+                                                res.status(404).json(err);
                                 } else {
                                                 res.json(rows);
                                 }
