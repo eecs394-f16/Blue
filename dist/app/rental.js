@@ -41,7 +41,35 @@ angular
                 });
             });
        };
-
+      $scope.loadRentals = function () {
+          $http({
+              method: "GET",
+              url: "http://naybro-node.mybluemix.net/rentals",
+              params: {
+                  uid: 4
+              }
+          }).then(function (response) {
+              $scope.rentalsResults = response.data;
+              for (var i = 0; i < $scope.rentalsResults.length; i++) {
+                  $http({
+                      method: "GET",
+                      url: "http://naybro-node.mybluemix.net/details",
+                      params: {
+                          pid: $scope.rentalsResults[i].Pid
+                      }
+                  }).then(function (responseP) {
+                      name = responseP.data[0].Name;
+                      img = responseP.data[0].Img;
+                      for (var j = 0; j < $scope.rentalsResults.length; j++) {
+                          if ($scope.rentalsResults[j].Pid == responseP.data[0].Pid) {
+                              $scope.rentalsResults[j].img = img;
+                              $scope.rentalsResults[j].name = name;
+                          }
+                      }
+                  });
+              }
+          });
+      };
     supersonic.ui.views.current.whenVisible( function () {
       if ( $scope.productId ) {
         _refreshListing();
@@ -62,7 +90,7 @@ angular
             params : {
                 uid1: $scope.searchResults.Uid,
                 pid: $scope.productId,
-                uid2: 1,
+                uid2: 4,
                 hours: 6
                 }
             }).then(function(response) {
@@ -73,6 +101,10 @@ angular
                 });
     };
     
+    supersonic.data.channel('changeTab').subscribe( function(index) {
+        
+        supersonic.ui.tabs.select(index);
+    });
     $scope.rentItem = function() {
 
         var options = {
@@ -84,7 +116,7 @@ angular
                 if (index === 0) {
                     
                     $scope.postRental();
-                    supersonic.ui.tabs.select(1);
+                    supersonic.data.channel('rentalPost').publish("refresh");
                  } else {
                         supersonic.logger.log("no rent");
                         }
@@ -138,37 +170,47 @@ angular
 
 angular
   .module('rental')
-  .controller('myRentalsController', function ($scope, supersonic, $http, $q) {
+  .controller('myRentalsController', function ($scope, supersonic, $http) {
+    
+    supersonic.data.channel('rentalPost').subscribe( function() {
+    
+        $scope.loadRentals();
+        supersonic.data.channel('changeTab').publish(1);
+    });
+    $scope.rentalsResults = [];
 
-      $scope.rentalsResults = [];
-
-      $scope.loadRentals = function () {
-          $http({
-              method: "GET",
-              url: "http://naybro-node.mybluemix.net/rentals",
-              params: {
-                  uid: 2
-              }
-          }).then(function (response) {
-              $scope.rentalsResults = response.data;
-              for (var i = 0; i < $scope.rentalsResults.length; i++) {
-                  $http({
-                      method: "GET",
-                      url: "http://naybro-node.mybluemix.net/details",
-                      params: {
-                          pid: $scope.rentalsResults[i].Pid
-                      }
-                  }).then(function (responseP) {
-                      name = responseP.data[0].Name;
-                      img = responseP.data[0].Img;
-                      for (var j = 0; j < $scope.rentalsResults.length; j++) {
-                          if ($scope.rentalsResults[j].Pid == responseP.data[0].Pid) {
-                              $scope.rentalsResults[j].img = img;
-                              $scope.rentalsResults[j].name = name;
-                          }
-                      }
-                  });
-              }
-          });
-      };
+    $scope.loadRentals = function () {
+        $http({
+            method: "GET",
+            url: "http://naybro-node.mybluemix.net/rentals",
+            params: {
+                uid: 4
+            }
+        }).then(function (response) {
+            $scope.rentalsResults = response.data;
+            for (var i = 0; i < $scope.rentalsResults.length; i++) {
+                $http({
+                    method: "GET",
+                    url: "http://naybro-node.mybluemix.net/details",
+                    params: {
+                        pid: $scope.rentalsResults[i].Pid
+                    }
+                }).then(function (responseP) {
+                    name = responseP.data[0].Name;
+                    img = responseP.data[0].Img;
+                    for (var j = 0; j < $scope.rentalsResults.length; j++) {
+                        if ($scope.rentalsResults[j].Pid == responseP.data[0].Pid) {
+                            $scope.rentalsResults[j].img = img;
+                            $scope.rentalsResults[j].name = name;
+                        }
+                    }
+                });
+            }
+        });
+    };
+           
+    supersonic.ui.views.current.whenVisible( function () {
+      
+      $scope.loadRentals();
+    });
   });
