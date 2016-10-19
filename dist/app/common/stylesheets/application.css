@@ -19,6 +19,35 @@
 .img-mini {
 	width: 30%;
 }
+.img-full-bck{
+  width: 100%;
+  opacity: 0.1;
+
+}
+.naybro-logo {
+  position: fixed;
+    top: 25%;
+    left: 15%;
+    width: 75%;
+    height: 50%;
+    text-align: center;
+}
+.fb-login-div{
+  position: fixed;
+  top: 55%;
+  left:25%;
+}
+.nb-title{
+  font-size: 500%;
+  font-weight: bold;
+}
+.nb-slogan{
+  font-size: 200%;
+  position: relative;
+
+}
+
+
 
 .no-results {
 	padding: 10px;

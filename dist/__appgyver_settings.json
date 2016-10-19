@@ -9,6 +9,10 @@
       "location": "http://localhost/app/example/using-the-scanner.html"
     }
   ],
+  "initialView": {
+    "id": "initialView",
+    "location": "http://localhost/app/rental/login.html"
+  },
   "tabs": [
     {
       "position": 0,
