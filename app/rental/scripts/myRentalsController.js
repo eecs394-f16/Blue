@@ -35,6 +35,35 @@ angular
                         }
                     }
                 });
+                $scope.date = new Date($scope.rentalsResults[i].initialTime);
+                $scope.rentalsResults[i].initialTime = $scope.date.toLocaleString();
+                switch ($scope.rentalsResults[i].status) {
+                    case 'requested':
+                        $scope.rentalsResults[i].statusBefore = '';
+                        $scope.rentalsResults[i].statusClass = 'orange';
+                        $scope.rentalsResults[i].statusAfter = '/confirmed/in use/returned/rated';
+                        break;
+                    case 'confirm': case 'confirmed':
+                        $scope.rentalsResults[i].statusBefore = 'requested/';
+                        $scope.rentalsResults[i].statusClass = 'yellow';
+                        $scope.rentalsResults[i].statusAfter = '/in use/returned/rated';
+                        break;
+                    case 'in use':
+                        $scope.rentalsResults[i].statusBefore = 'requested/confirmed';
+                        $scope.rentalsResults[i].statusClass = 'green';
+                        $scope.rentalsResults[i].statusAfter = '/returned/rated';
+                        break;
+                    case 'returned':
+                        $scope.rentalsResults[i].statusBefore = 'requested/confirmed/in use/';
+                        $scope.rentalsResults[i].statusClass = 'blue';
+                        $scope.rentalsResults[i].statusAfter = '/rated';
+                        break;
+                    case 'rated':
+                        $scope.rentalsResults[i].statusBefore = 'requested/confirmed/in use/returned/';
+                        $scope.rentalsResults[i].statusClass = 'purple';
+                        $scope.rentalsResults[i].statusAfter = '';
+                        break;
+                }
             }
         });
     };

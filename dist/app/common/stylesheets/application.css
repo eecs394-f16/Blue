@@ -4,10 +4,38 @@
   font-weight: 600;
 }
 
+document {
+	font-family: 'Antic', sans-serif;
+}
+
+.renter {
+	background-color: #F4F4F4
+}
+
+.orange {
+	color: #C98200;
+}
+
+.yellow {
+	color: #C9C920;
+}
+
+.green {
+	color: #3DAA46;
+}
+
+.blue {
+	color: #2061c9;
+}
+
+.purple {
+	color: #6716AA;
+}
+
 .details td {
 	padding: 5px;
-	font-family: 'Raleway', sans-serif;
 }
+
 #details-name {
 	font-size: 32px;
 	padding-bottom: 4px;

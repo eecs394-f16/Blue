@@ -6,7 +6,7 @@
         <ul>
             <li ng-repeat="rental in rentalsResults">
             	<super-navigate>
-                    <a class="item">
+                    <a class="item {{rental.renter}}">
                         <img style='display: inline-block' class='img-mini' id='details-img' src='{{rental.img}}' />
                         <table class="details" style='display:inline-block'>
                             <tr>
@@ -14,8 +14,12 @@
                                 <td>{{rental.name}}</td>
                             </tr>
                             <tr>
-                                <td><i class="icon super-android-expand"></i></td>
-                                <td>{{rental.status}}</td>
+                                <td><i class="icon super-calendar"></i></td>
+                                <td>{{rental.initialTime}}</td>
+                            </tr>
+                            <tr>
+                                <td><i class="icon super-speedometer"></i></td>
+                                <td style="color: #BABABA">{{rental.statusBefore}}<span class="{{rental.statusClass}}">{{rental.status}}</span>{{rental.statusAfter}}</td>
                             </tr>
                         </table>
                     </a>
