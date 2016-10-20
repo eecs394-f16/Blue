@@ -4,7 +4,6 @@
   font-weight: 600;
 }
 .profileContainer {
-	align: center;
 	padding: 50px;
 }
 .profileDetails {
@@ -19,6 +18,7 @@
 	padding-bottom: 50%;
 }
 .profileDetails td {
+	text-align: right;
 	padding: 10px;
 	font-size: 20px;
 }
@@ -63,11 +63,29 @@
 }
 .img-circle-div {
 	display: inline-block;
+	margin-left: auto;
+	margin-right: auto;
 	width: 200px;
 	height: 200px;
 	position: relative;
 	overflow: hidden;
 	border-radius: 50%;
+}
+@media screen and (max-width: 480px) {
+	.img-circle-div {
+		display: block;
+	}
+	.profileDetails {
+		display: block;
+		margin: 0;
+	}
+	.profileDetails table {
+		width: 100%;
+	}
+	.profileDetails td {
+		width: 100%;
+		text-align: center;
+	}
 }
 .img-circle-div img{
 	display: block;
