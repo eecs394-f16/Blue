@@ -3,11 +3,53 @@
   text-align: center;
   font-weight: 600;
 }
+.profileContainer {
+	align: center;
+	padding: 50px;
+}
+.profileDetails {
+	height: 200px;
+	margin-left: 50px;
+	padding-top: 20px;
+	display: inline-block;
+}
+.profileDetails table {
+	vertical-align: middle;
+	padding-top: 50%;
+	padding-bottom: 50%;
+}
+.profileDetails td {
+	padding: 10px;
+	font-size: 20px;
+}
 
+.renter {
+	background-color: #F4F4F4
+}
+
+.orange {
+	color: #C98200;
+}
+.yellow {
+	color: #C9C920;
+}
+.green {
+	color: #3DAA46;
+}
+.blue {
+	color: #2061c9;
+}
+.purple {
+	color: #6716AA;
+}
+
+.details {
+	display: inline-block;
+}
 .details td {
 	padding: 5px;
-	font-family: 'Raleway', sans-serif;
 }
+
 #details-name {
 	font-size: 32px;
 	padding-bottom: 4px;
@@ -18,6 +60,20 @@
 }
 .img-mini {
 	width: 30%;
+}
+.img-circle-div {
+	display: inline-block;
+	width: 200px;
+	height: 200px;
+	position: relative;
+	overflow: hidden;
+	border-radius: 50%;
+}
+.img-circle-div img{
+	display: block;
+	margin: 0 auto;
+	height: 100%;
+	width: auto;
 }
 .img-full-bck{
   width: 100%;

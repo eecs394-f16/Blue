@@ -1,0 +1,18 @@
+<div ng-controller="myAccountController" class="padding" ng-init="loadProfile()">
+	<super-navbar>
+		<super-navbar-title>My Account</super-navbar-title>
+	</super-navbar>
+    <div class="profileContainer">
+        <div class="img-circle-div">
+            <img src="https://ci.memecdn.com/26/8339026.jpg" />
+        </div>
+        <div class="profileDetails">
+            <table>
+                <tr><td style="font-size: 30px">{{account.name}}</td></tr>
+                <tr><td>{{account.location}}</td></tr>
+                <tr><td>{{account.email}}</td></tr>
+                <tr><td>{{account.number}}</td></tr>
+            </table>
+        </div>
+    </div>
+</div>
