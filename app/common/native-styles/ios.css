@@ -14,9 +14,18 @@ navigation-bar title {
   font-weight: 600;
 }
 
+navigation-bar button {
+  color: #ffffff;
+  font-weight: 300;
+}
+
 navigation-bar button, navigation-bar back-bar-button {
   color: #ffffff;
   font-weight: 300;
+}
+
+#nav-newListing icon {
+  background-image: url(icons/new.svg);
 }
 
 tab-bar {

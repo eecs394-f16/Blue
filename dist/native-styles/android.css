@@ -28,6 +28,10 @@ navigation-bar back-indicator {
   background-size: 18;
 }
 
+#nav-newListing {
+  background-image: url(icons/new.svg);
+}
+
 navigation-bar back-button {
   color: #ffffff;
   font-weight: 300;

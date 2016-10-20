@@ -2,6 +2,23 @@ angular
   .module('rental')
   .controller('myRentalsController', function ($scope, supersonic, $http) {
     
+    newListingBtn = new supersonic.ui.NavigationBarButton({
+      onTap: function() {
+        
+        var view = new supersonic.ui.View("rental#newListing");
+        supersonic.ui.layers.push(view);
+      },
+      styleId: "nav-newListing"
+    });
+    
+    supersonic.ui.navigationBar.update({
+      title: "My Rentals",
+      overrideBackButton: false,
+      buttons: {
+        right: [newListingBtn]
+      }
+    }).then(supersonic.ui.navigationBar.show());
+    
     supersonic.data.channel('rentalPost').subscribe( function() {
     
         $scope.loadRentals();

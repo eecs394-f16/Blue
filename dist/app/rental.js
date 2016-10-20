@@ -184,6 +184,23 @@ angular
   .module('rental')
   .controller('myRentalsController', function ($scope, supersonic, $http) {
     
+    newListingBtn = new supersonic.ui.NavigationBarButton({
+      onTap: function() {
+        
+        var view = new supersonic.ui.View("rental#newListing");
+        supersonic.ui.layers.push(view);
+      },
+      styleId: "nav-newListing"
+    });
+    
+    supersonic.ui.navigationBar.update({
+      title: "My Rentals",
+      overrideBackButton: false,
+      buttons: {
+        right: [newListingBtn]
+      }
+    }).then(supersonic.ui.navigationBar.show());
+    
     supersonic.data.channel('rentalPost').subscribe( function() {
     
         $scope.loadRentals();
@@ -226,3 +243,23 @@ angular
       $scope.loadRentals();
     });
   });
+
+angular
+  .module('rental')
+  .controller('DetailController', function($scope, supersonic, $http) {
+    
+     $scope.update = function(listing) {
+        
+        supersonic.logger.debug(listing);
+    };
+    
+    $http({
+        method : "GET",
+        url : "http://naybro-node.mybluemix.net/user",
+        params : {
+            uid : 4
+        }}).then(function(response) {
+        
+        $scope.username = response.data[0].Username;
+        });
+    });
