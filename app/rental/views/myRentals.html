@@ -7,8 +7,8 @@
             <li ng-repeat="rental in rentalsResults">
             	<super-navigate>
                     <a class="item {{rental.renter}}">
-                        <img style='display: inline-block' class='img-mini' id='details-img' src='{{rental.img}}' />
-                        <table class="details" style='display:inline-block'>
+                        <img class='img-mini details' id='details-img' src='{{rental.img}}' />
+                        <table class="details">
                             <tr>
                                 <td><i class="icon super-pricetag"></i></td>
                                 <td>{{rental.name}}</td>

@@ -18,11 +18,11 @@ module.exports =
       id: "inbox"
       location: "rental#myRentals" # URLs are supported!
     }
-    #{
-    #  title: "Settings"
-    #  id: "settings"
-    #  location: "example#settings"
-    #}
+    {
+      title: "My Account"
+      id: "person"
+      location: "rental#myAccount"
+    }
   ]
 
   # rootView:

@@ -47,5 +47,9 @@ tab-bar-item#internet {
 }
 
 tab-bar-item#inbox {
-background-image: url(icons/inbox.svg);
+  background-image: url(icons/inbox.svg);
+}
+
+tab-bar-item#person {
+  background-image: url(icons/person.svg);
 }
