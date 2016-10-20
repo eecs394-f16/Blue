@@ -182,6 +182,13 @@ angular
 
 angular
   .module('rental')
+  .controller('myAccountController', function ($scope) {
+      $scope.loadProfile = function () {
+          $scope.account = { 'name': 'Brian Walker', 'location': 'Evanston, IL', 'email': 'brian@nu.com', 'number': '(123) 567-789', 'description': 'I have many things to rent out' };
+      };
+  });
+angular
+  .module('rental')
   .controller('myRentalsController', function ($scope, supersonic, $http) {
     
     newListingBtn = new supersonic.ui.NavigationBarButton({
@@ -234,6 +241,35 @@ angular
                         }
                     }
                 });
+                $scope.date = new Date($scope.rentalsResults[i].initialTime);
+                $scope.rentalsResults[i].initialTime = $scope.date.toLocaleString();
+                switch ($scope.rentalsResults[i].status) {
+                    case 'requested':
+                        $scope.rentalsResults[i].statusBefore = '';
+                        $scope.rentalsResults[i].statusClass = 'orange';
+                        $scope.rentalsResults[i].statusAfter = '/confirmed/in use/returned/rated';
+                        break;
+                    case 'confirm': case 'confirmed':
+                        $scope.rentalsResults[i].statusBefore = 'requested/';
+                        $scope.rentalsResults[i].statusClass = 'yellow';
+                        $scope.rentalsResults[i].statusAfter = '/in use/returned/rated';
+                        break;
+                    case 'in use':
+                        $scope.rentalsResults[i].statusBefore = 'requested/confirmed';
+                        $scope.rentalsResults[i].statusClass = 'green';
+                        $scope.rentalsResults[i].statusAfter = '/returned/rated';
+                        break;
+                    case 'returned':
+                        $scope.rentalsResults[i].statusBefore = 'requested/confirmed/in use/';
+                        $scope.rentalsResults[i].statusClass = 'blue';
+                        $scope.rentalsResults[i].statusAfter = '/rated';
+                        break;
+                    case 'rated':
+                        $scope.rentalsResults[i].statusBefore = 'requested/confirmed/in use/returned/';
+                        $scope.rentalsResults[i].statusClass = 'purple';
+                        $scope.rentalsResults[i].statusAfter = '';
+                        break;
+                }
             }
         });
     };
@@ -246,20 +282,30 @@ angular
 
 angular
   .module('rental')
-  .controller('DetailController', function($scope, supersonic, $http) {
+  .controller('newListingController', function($scope, supersonic, $http) {
+   
+   $scope.listing = undefined;
+   $scope.update = function(listing) {
+      
+      supersonic.logger.debug(listing);
+   };
+ 
+    supersonic.ui.views.current.whenVisible( function () {
+          $http({
+          method : "GET",
+          url : "http://naybro-node.mybluemix.net/user",
+          params : {
+              uid : 4
+          }}).then(function(response) {
+          
+             $scope.username = response.data[0].Username;
+          });
+      });
     
-     $scope.update = function(listing) {
-        
-        supersonic.logger.debug(listing);
-    };
+    $scope.autoExpand = function(e) {
+      var element = typeof e === 'object' ? e.target : document.getElementById(e);
+      var scrollHeight = element.scrollHeight;
+      element.style.height =  scrollHeight + "px";    
+   };
     
-    $http({
-        method : "GET",
-        url : "http://naybro-node.mybluemix.net/user",
-        params : {
-            uid : 4
-        }}).then(function(response) {
-        
-        $scope.username = response.data[0].Username;
-        });
-    });
+});

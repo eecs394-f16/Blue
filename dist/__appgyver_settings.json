@@ -25,6 +25,12 @@
       "id": "inbox",
       "title": "My Rentals",
       "target_url": "http://localhost/app/rental/myRentals.html"
+    },
+    {
+      "position": 2,
+      "id": "person",
+      "title": "My Account",
+      "target_url": "http://localhost/app/rental/myAccount.html"
     }
   ],
   "configuration": {

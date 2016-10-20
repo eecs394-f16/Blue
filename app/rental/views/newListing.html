@@ -4,7 +4,7 @@
 		<super-navbar-title>New Listing</super-navbar-title>
 	</super-navbar>
 	<img class='img-full' id='details-img' src='{{img}}'/>
-	<form novalidate ng-submit="getInput()">
+	<form novalidate>
         <div class="padding">
             <table class="details">
                 <tr>
@@ -19,14 +19,17 @@
                 <tr>
                     <td><i class="icon super-social-usd"></i></td>
                     <td id="details-price">
-                        <input type="number" ng-model="listing.rate">
-                        /hour
+                        <input type="number" ng-model="listing.rate" placeholder="Price per hour">
                     </td>
                 </tr>
                 <tr>
                     <td><i class="icon super-drag"></i></td>
                     <td id="details-description" style="width: 100%">
-                        <input style="width: 100%" type="textarea" placeholder="Item Description" ng-model="listing.description">
+                        <textarea class="textarea"
+								  type="textarea"
+								  placeholder="Item Description"
+								  ng-model="listing.description"
+								  ng-keyup="autoExpand($event)"></textarea>
                     </td>
                 </tr>
             </table>
