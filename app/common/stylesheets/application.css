@@ -109,7 +109,8 @@
 .fb-login-div{
   position: fixed;
   top: 55%;
-  left:25%;
+  width: 60%;
+  left:20%;
 }
 .nb-title{
   font-size: 500%;
