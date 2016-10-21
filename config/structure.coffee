@@ -23,6 +23,11 @@ module.exports =
       id: "person"
       location: "rental#myAccount"
     }
+    {
+      title: "FB"
+      id: "internet"
+      location: "rental#inbox"
+    }
   ]
 
   # rootView:

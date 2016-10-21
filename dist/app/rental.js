@@ -154,7 +154,9 @@ angular
     //steroids.addon.facebook.ready.then(funtion(){
      //$scope.logme = "Done";
     console.log("Lolo not gonig to werk");
-    // });
+      // });
+
+
   });
 
 angular

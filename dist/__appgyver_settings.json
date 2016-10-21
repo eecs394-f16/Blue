@@ -31,6 +31,12 @@
       "id": "person",
       "title": "My Account",
       "target_url": "http://localhost/app/rental/myAccount.html"
+    },
+    {
+      "position": 3,
+      "id": "internet",
+      "title": "FB",
+      "target_url": "http://localhost/app/rental/inbox.html"
     }
   ],
   "configuration": {
