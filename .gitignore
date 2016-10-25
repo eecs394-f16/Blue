@@ -3,3 +3,5 @@ naybro-node/node_modules
 node_modules
 logs
 dist
+*.log
+logs/steroids.log
