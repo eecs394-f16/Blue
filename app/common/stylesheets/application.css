@@ -46,8 +46,13 @@
 .details {
 	display: inline-block;
 }
-.details td {
+.detailsTable {
+	width: 70%;
+}
+.detailsTable td {
 	padding: 5px;
+	white-space: normal;
+	vertical-align: middle;
 }
 
 #details-name {
