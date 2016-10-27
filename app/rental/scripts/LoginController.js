@@ -1,6 +1,10 @@
 angular
   .module('rental')
   .controller('LoginController', function($scope, supersonic, $http) {
+    $scope.hideMe = true;
+    if(localStorage.getItem('user') === null){
+      $scope.hideMe = false;
+    }
     $scope.fbusername= "Use Facebook Username";
     $scope.logme = function(){      //if the box isnt empty
       if($scope.fbusername.length > 0){
