@@ -104,13 +104,13 @@ angular
             
             supersonic.ui.dialog.confirm("", options).then(function(index) {
                 if (index === 0) {
-                    /*var options = {
+                    var options = {
                         message: "Your request has been sent!",
                         buttonLabel: "Close"
                     };
                     supersonic.ui.dialog.alert("Congratulations", options).then(function () {
                         supersonic.logger.log("Alert closed");
-                    });*/
+                    });
                     $scope.postRental();
                     supersonic.data.channel('rentalPost').publish("refresh");
                  } else {

@@ -53,13 +53,20 @@ angular
                         }
                     }
                 });
+                if ($scope.rentalsResults[i].Uid1 != 4)
+                    $scope.rentalsResults[i].role = 'renter';
+                else
+                    $scope.rentalsResults[i].role = 'rentee';
                 $scope.date = new Date($scope.rentalsResults[i].initialTime);
                 $scope.rentalsResults[i].initialTime = $scope.date.toLocaleString();
+                $scope.rentalsResults[i].action = "hidden"
                 switch ($scope.rentalsResults[i].status) {
                     case 'requested':
                         $scope.rentalsResults[i].statusBefore = '';
                         $scope.rentalsResults[i].statusClass = 'orange';
                         $scope.rentalsResults[i].statusAfter = '/confirmed/in use/returned/rated';
+                        if ($scope.rentalsResults[i].role == 'rentee')
+                            $scope.rentalsResults[i].action = 'visible';
                         break;
                     case 'confirm': case 'confirmed':
                         $scope.rentalsResults[i].statusBefore = 'requested/';
@@ -85,9 +92,38 @@ angular
             }
         });
     };
+
+    $scope.acceptRequest = function (Rid) {
+        var options = {
+            message: "Are you sure you want to accept this request?",
+            buttonLabels: ["Yes", "No"]
+        };
+        supersonic.ui.dialog.confirm("Accept?", options).then(function (index) {
+            if (index == 0) {
+                $scope.loadRentals();
+                alert('ok you have accepted the request');
+            }
+            else
+                alert('ok you have not accepted the request');
+        });
+    }
+
+    $scope.rejectRequest = function (Rid) {
+        var options = {
+            message: "Are you sure you want to reject this request?",
+            buttonLabels: ["Yes", "No"]
+        };
+        supersonic.ui.dialog.confirm("Reject?", options).then(function (index) {
+            if (index == 0) {
+                $scope.loadRentals();
+                alert('ok you have rejected the request');
+            }
+            else
+                alert('ok you have not rejected the request');
+        });
+    }
            
     supersonic.ui.views.current.whenVisible( function () {
-      
       $scope.loadRentals();
     });
   });
