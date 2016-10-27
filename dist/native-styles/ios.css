@@ -27,6 +27,9 @@ navigation-bar button, navigation-bar back-bar-button {
 #nav-newListing icon {
   background-image: url(icons/new.svg);
 }
+#nav-logout icon {
+  background-image: url(icons/Logout.svg);
+}
 
 tab-bar {
   background-color: #ffffff;

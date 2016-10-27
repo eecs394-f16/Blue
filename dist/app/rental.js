@@ -12,7 +12,11 @@ angular
   .module('rental')
   .controller('DetailController', function($scope, supersonic, $http) {
 
-    $scope.productId = undefined;
+      $scope.productId = undefined;
+      document.getElementById("datePicker").value = "2016-10-27";
+      $scope.range = function (n) {
+          return new Array(n);
+      };
 
     var _refreshListing = function () {
         
@@ -22,16 +26,16 @@ angular
             params: {
                 pid : $scope.productId
             }})
-        .then(function(response) {
-                
+        .then(function (response) {
             $scope.searchResults = response.data[0];
             $scope.productName = $scope.searchResults.Name;
             $scope.productRate = $scope.searchResults.Rate;
             $scope.productDescription = $scope.searchResults.Description;
+            $scope.productRating = parseInt($scope.searchResults.Rating);
             $scope.img = $scope.searchResults.Img;
             $http({
                 method : "GET",
-                url : "http://naybro-node.mybluemix.net/user",
+                url : "http://naybro-node.mybluemix.net/uid",
                 params : {
                     uid : $scope.searchResults.Uid
                 }})
@@ -46,7 +50,7 @@ angular
               method: "GET",
               url: "http://naybro-node.mybluemix.net/rentals",
               params: {
-                  uid: 4
+                  uid: parseInt(localStorage.getItem('user'))
               }
           }).then(function (response) {
               $scope.rentalsResults = response.data;
@@ -82,16 +86,17 @@ angular
     });
     
     $scope.postRental = function() {
-        
+        //var date = document.getElementById('datePicker').value;
         $http({
             method: 'GET',
             url: 'http://naybro-node.mybluemix.net/request',
             headers: { 'Content-Type': 'application/json' } ,
             params : {
-                uid1: $scope.searchResults.Uid,
+                uid1: parseInt(localStorage.getItem('user')),
                 pid: $scope.productId,
-                uid2: 4,
+                uid2: $scope.searchResults.Uid,
                 hours: 6
+                //date: date
                 }
             }).then(function(response) {
                     supersonic.logger.debug(response);
@@ -154,11 +159,16 @@ angular
 angular
   .module('rental')
   .controller('LoginController', function($scope, supersonic, $http) {
+    $scope.hideMe = true;
+    if(localStorage.getItem('user') === null){
+      $scope.hideMe = false;
+    }
     $scope.fbusername= "";
-    $scope.logme = function(){      //if the box isnt empty
-      if($scope.fbusername.length > 0){
-        //if no userid is found in local storage
-        if(localStorage.getItem('user') === null){
+    $scope.logme = function(){
+      supersonic.logger.debug(localStorage.getItem('user'));
+      if(localStorage.getItem('user') === null){
+        
+        if($scope.fbusername.length > 0){
           $http({
                         method : "GET",
                         url : "http://naybro-node.mybluemix.net/user",
@@ -177,23 +187,18 @@ angular
                             url : "http://naybro-node.mybluemix.net/signup",
                             params : {
                               username : $scope.fbusername
-                            }})
+                            }});
                             $scope.logme();
 
                         }
                       });
         }
-        else{
-          supersonic.ui.initialView.dismiss();
-        }
-
-
       }
-
+      else{
+        supersonic.ui.initialView.dismiss();
+      }
     };
-
   });
-
 angular
   .module('rental')
   .controller('SearchController', function($scope, supersonic, $http) {
@@ -229,10 +234,41 @@ angular
 
 angular
   .module('rental')
-  .controller('myAccountController', function ($scope) {
+  .controller('myAccountController', function ($scope,$http,supersonic) {
+    newListingBtn = new supersonic.ui.NavigationBarButton({
+      onTap: function() {
+      localStorage.removeItem('user');
+      supersonic.ui.initialView.show();
+      },
+      styleId: "nav-logout"
+    });
+
+
       $scope.loadProfile = function () {
-          $scope.account = { 'name': 'Brian Walker', 'location': 'Evanston, IL', 'email': 'brian@nu.com', 'number': '(123) 567-789', 'description': 'I have many things to rent out' };
+
+          $http({
+                method : "GET",
+                url : "http://naybro-node.mybluemix.net/uid",
+                params : {
+                    uid : parseInt(localStorage.getItem('user'))
+            }})
+            .then(function(response) {
+              supersonic.ui.navigationBar.update({
+                title: "Account",
+                overrideBackButton: false,
+                buttons: {
+                  right: [newListingBtn]
+                }
+              }).then(supersonic.ui.navigationBar.show());
+                supersonic.logger.debug(response);
+                $scope.username = response.data[0].Username;
+            });
+          $scope.account = { 'name': $scope.username, 'location': 'Evanston, IL', 'email': 'iwanttorent@nu.com', 'number': '(123) 567-789', 'description': 'I have many things to rent out' };
       };
+
+      supersonic.ui.views.current.whenVisible( function () {
+        $scope.loadProfile();
+    });
 
       $scope.myThings = [
           {
@@ -242,9 +278,16 @@ angular
               'Rating': 5
           }
       ];
-      
-      
+
+      supersonic.data.channel('pseudoNewListing').subscribe(function(html){
+
+
+        document.getElementById("cheat").innerHTML = document.getElementById("cheat").innerHTML + html;
+        supersonic.ui.tabs.select(2);
+        supersonic.data.channel('pseudoDone').publish();
+      });
   });
+
 angular
   .module('rental')
   .controller('myRentalsController', function ($scope, supersonic, $http) {
@@ -279,7 +322,7 @@ angular
             method: "GET",
             url: "http://naybro-node.mybluemix.net/rentals",
             params: {
-                uid: 4
+                uid: parseInt(localStorage.getItem('user'))
             }
         }).then(function (response) {
             $scope.rentalsResults = response.data;
@@ -300,7 +343,7 @@ angular
                         }
                     }
                 });
-                if ($scope.rentalsResults[i].Uid1 != 4)
+                if ($scope.rentalsResults[i].Uid1 != parseInt(localStorage.getItem('user')))
                     $scope.rentalsResults[i].role = 'renter';
                 else
                     $scope.rentalsResults[i].role = 'rentee';
@@ -340,15 +383,36 @@ angular
         });
     };
 
+    $scope.acceptRentals = function(Rid) {
+      
+     $http({
+            method: "GET",
+            url: "http://naybro-node.mybluemix.net/rentals/accept",
+            params: {
+                rid: Rid
+            }});
+    };
+    
+    $scope.rejectRentals = function(Rid) {
+      
+     $http({
+            method: "GET",
+            url: "http://naybro-node.mybluemix.net/rentals/reject",
+            params: {
+                rid: Rid
+            }});
+    };
+    
     $scope.acceptRequest = function (Rid) {
         var options = {
             message: "Are you sure you want to accept this request?",
             buttonLabels: ["Yes", "No"]
         };
-        supersonic.ui.dialog.confirm("Accept?", options).then(function (index) {
+        supersonic.ui.dialog.confirm("Accept", options).then(function (index) {
             if (index == 0) {
-                $scope.loadRentals();
+                $scope.acceptRentals(Rid);
                 alert('ok you have accepted the request');
+                $scope.loadRentals();
             }
             else
                 alert('ok you have not accepted the request');
@@ -360,10 +424,11 @@ angular
             message: "Are you sure you want to reject this request?",
             buttonLabels: ["Yes", "No"]
         };
-        supersonic.ui.dialog.confirm("Reject?", options).then(function (index) {
+        supersonic.ui.dialog.confirm("Reject", options).then(function (index) {
             if (index == 0) {
-                $scope.loadRentals();
+                $scope.rejectRentals();
                 alert('ok you have rejected the request');
+                $scope.loadRentals();
             }
             else
                 alert('ok you have not rejected the request');
@@ -386,21 +451,20 @@ angular
       supersonic.logger.debug(listing);
       var image = document.getElementById('listingImg');
       
-      var html= "<a class='item'> <img style='display: inline-block' class='img-mini' id='details-img' src='"+
-                  image.src + "' /> <table class='details detailsTable' style='display:inline-block> <tr> <td><i class='icon super-pricetag'></i></td> <td>" +
-                  listing.name + "</td> </tr><tr><td><i class='icon super-social-usd'></i></td><td>" +
-                  listing.rate + "/hr</td></tr><tr><td><i class='icon super-star'></i></td><td>Rating : " +
-                  0 + "</td> </tr> </table> </a>";
+      var html= "<a class='item'> <img style='display: inline-block' class='img-mini' id='details-img' src='"+image.src+"' /> <table class='details detailsTable' style='display:inline-block'> <tr> <td><i class='icon super-pricetag'></i></td> <td>"+listing.name+"</td> </tr><tr><td><i class='icon super-social-usd'></i></td><td>"+listing.rate+"/hr</td></tr><tr><td><i class='icon super-star'></i></td><td>Rating : 0</td> </tr> </table> </a>";
                   
        supersonic.data.channel('pseudoNewListing').publish(html);
+       supersonic.data.channel('pseudoDone').subscribe(function(){
+         supersonic.ui.layers.pop();
+       });  
    };
  
     supersonic.ui.views.current.whenVisible( function () {
           $http({
           method : "GET",
-          url : "http://naybro-node.mybluemix.net/user",
+          url : "http://naybro-node.mybluemix.net/uid",
           params : {
-              uid : 4
+              uid : localStorage.getItem('user')
           }}).then(function(response) {
           
              $scope.username = response.data[0].Username;
