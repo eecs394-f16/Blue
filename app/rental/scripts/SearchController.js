@@ -12,7 +12,10 @@ angular
       productName : $scope.searchInput
       }})
     .then(function(response) {
-      $scope.searchResults = response.data;
+        $scope.searchResults = response.data;
+        for (var i = 0; i < $scope.searchResults.length; i++) {
+            $scope.searchResults[i].Rating = parseInt($scope.searchResults[i].Rating);
+        }
     });
     $scope.getInput = function() {
 
@@ -24,9 +27,13 @@ angular
           productName : $scope.searchInput
           }})
         .then(function(response) {
-
           $scope.searchResults = response.data;
         });
 
     };
+
+    $scope.range = function (n) {
+        return new Array(n);
+    };
+
   });

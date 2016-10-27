@@ -16,7 +16,7 @@
 				<super-navigate location="rental#detail" data-params-id="{{result.Pid}}">
 					<a class="item">
 						<img style='display: inline-block' class='img-mini' id='details-img' src='{{result.Img}}'/>
-						<table class="details" style='display:inline-block'>
+						<table class="details detailsTable">
 							<tr>
 								<td><i class="icon super-pricetag"></i></td>
 								<td>{{result.Name}}</td>
@@ -26,8 +26,8 @@
 								<td>{{result.Rate}}/hr</td>
 							</tr>
 							<tr>
-								<td><i class="icon super-star"></i></td>
-								<td>Rating : {{result.Rating}}</td>
+								<td></td>
+								<td><i class="icon super-star" ng-repeat="a in range(result.Rating) track by $index"></i></td>
 							</tr>
 						</table>
 					</a>
