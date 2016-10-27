@@ -5,7 +5,7 @@
 	</super-navbar>
 	<img class='img-full' id='details-img' src='{{img}}'/>
 	<div class="padding">
-		<table class="details">
+		<table class="details detailsTable">
 			<tr>
 				<td colspan="2" id="details-name">{{productName}}</td>
 			</tr>
@@ -21,7 +21,14 @@
 				<td><i class="icon super-drag"></i></td>
 				<td id="details-description">{{productDescription}}</td>
 			</tr>
+            <tr>
+                <td></td>
+                <td><i class="icon super-star" ng-repeat="a in range(productRating) track by $index"></i></td>
+            </tr>
+            <tr>
+                <td><i class="icon super-calendar"></i></td>
+                <td><input style="display: inline-block" id="datePicker" type="date"/><div style="visibility: hidden; color: #199b1a; padding-left: 5px; display: inline-block">Available!</div></td>
+            </tr>
 		</table>
-		<p id='details-rating'>{{productRating}}</p>
 	<button class="button button-block button-positive" ng-click="rentItem()">Rent now!</button>
 </div>
