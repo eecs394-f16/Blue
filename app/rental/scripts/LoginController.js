@@ -1,12 +1,42 @@
 angular
   .module('rental')
   .controller('LoginController', function($scope, supersonic, $http) {
-
     $scope.fbusername= "Use Facebook Username";
-    $scope.logme = function(){
+    $scope.logme = function(){      //if the box isnt empty
       if($scope.fbusername.length > 0){
-        supersonic.ui.initialView.dismiss();
+        //if no userid is found in local storage
+        if(localStorage.getItem('user') === null){
+          $http({
+                        method : "GET",
+                        url : "http://naybro-node.mybluemix.net/user",
+                        params : {
+                            username : $scope.fbusername
+                        }})
+                    .then(function(response) {
+                        if(response.data.length){
+                          $scope.uid = response.data[0].Uid;
+                          localStorage.setItem('user', $scope.uid );
+                          $scope.logme();
+                        }
+                        else{
+                          $http({
+                            method : "GET",
+                            url : "http://naybro-node.mybluemix.net/signup",
+                            params : {
+                              username : $scope.fbusername
+                            }})
+                            $scope.logme();
+
+                        }
+                      });
+        }
+        else{
+          supersonic.ui.initialView.dismiss();
+        }
+
+
       }
+
     };
 
   });

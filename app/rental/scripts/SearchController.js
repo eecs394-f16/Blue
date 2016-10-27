@@ -4,9 +4,19 @@ angular
 
     $scope.navbarTitle = "Search";
     $scope.searchResult = undefined;
+    document.activeElement.blur(); 
+     $http({
+      method : "GET",
+      url : "http://naybro-node.mybluemix.net/init",
+      params: {
+      productName : $scope.searchInput
+      }})
+    .then(function(response) {
+      $scope.searchResults = response.data;
+    });
     $scope.getInput = function() {
 
-        document.activeElement.blur(); 
+        document.activeElement.blur();
          $http({
           method : "GET",
           url : "http://naybro-node.mybluemix.net/name",
@@ -14,9 +24,9 @@ angular
           productName : $scope.searchInput
           }})
         .then(function(response) {
-          
+
           $scope.searchResults = response.data;
         });
-        
+
     };
   });
