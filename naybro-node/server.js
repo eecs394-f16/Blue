@@ -40,6 +40,19 @@ app.get('/name', function(req, res){
     });
 
 });
+app.get('/init', function(req, res){
+        var query = "select * from products ORDER BY rating DESC LIMIT 10";    connection.query(query, function(err, rows, fields) {
+        if (err) {
+            console.log('Error: ' + err);
+            res.status(404).send('Not found');
+        } else {
+            res.set('Access-Control-Allow-Origin', '*');
+            res.set('Access-Control-Allow-Methods', '["GET"]');
+            res.json(rows);
+        }
+    });
+
+});
 
 //query by product id for getting info for the details page
 app.get('/details', function(req, res){
@@ -117,6 +130,20 @@ app.get('/user', function(req, res){
         if (err) {
             console.log('Error: ' + err);
             res.status(404).send('Not kfound');
+        } else {
+            res.set('Access-Control-Allow-Origin', '*');
+            res.set('Access-Control-Allow-Methods', '["GET"]');
+            res.json(rows);
+        }
+    });
+});
+
+app.get('/date', function(req, res){
+        var query = "select * from rentals where initialTime BETWEEN '"+ req.query.date+" 00:00:00' AND '"+req.query.date+" 23:59:59' AND Pid = "+req.query.pid;    connection.query(query, function(err, rows, fields) {
+
+        if (err) {
+            console.log('Error: ' + err);
+            res.status(404).send('Not jfound');
         } else {
             res.set('Access-Control-Allow-Origin', '*');
             res.set('Access-Control-Allow-Methods', '["GET"]');
