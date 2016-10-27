@@ -53,7 +53,7 @@ angular
                         }
                     }
                 });
-                if ($scope.rentalsResults[i].Uid1 != parseInt(localStorage.getItem('user')))
+                if ($scope.rentalsResults[i].Uid1 == parseInt(localStorage.getItem('user')))
                     $scope.rentalsResults[i].role = 'renter';
                 else
                     $scope.rentalsResults[i].role = 'rentee';
