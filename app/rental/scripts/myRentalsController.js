@@ -82,10 +82,17 @@ angular
                         $scope.rentalsResults[i].statusBefore = 'requested/confirmed/in use/';
                         $scope.rentalsResults[i].statusClass = 'blue';
                         $scope.rentalsResults[i].statusAfter = '/rated';
+                        if ($scope.rentalsResults[i].role == 'rentee')
+                            $scope.rentalsResults[i].action = 'visible';
                         break;
                     case 'rated':
                         $scope.rentalsResults[i].statusBefore = 'requested/confirmed/in use/returned/';
                         $scope.rentalsResults[i].statusClass = 'purple';
+                        $scope.rentalsResults[i].statusAfter = '';
+                        break;
+                    case 'rejected':
+                        $scope.rentalsResults[i].statusBefore = '';
+                        $scope.rentalsResults[i].statusClass = 'black';
                         $scope.rentalsResults[i].statusAfter = '';
                         break;
                 }
