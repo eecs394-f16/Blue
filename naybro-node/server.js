@@ -70,16 +70,9 @@ app.get('/rentals', function (req, res) {
     });
 });
 
-//query by user id
-<<<<<<< HEAD
 app.get('/rentals/posted', function (req, res) {
     var query = "select * from rentals where Uid2 = " + req.query.uid;
-=======
-/*
-app.get('/rentals', function (req, res) {//
-    var query = "select * from rentals where Uid1 = " + req.query.uid;
->>>>>>> origin/master
-    connection.query(query, function (err, rows, fields) {
+     connection.query(query, function (err, rows, fields) {
         if (err) {
             console.log('Error: ' + err);
             res.status(404).send('Not afound');
@@ -90,7 +83,7 @@ app.get('/rentals', function (req, res) {//
         }
     });
 });
-*/
+
 
 app.get('/uid', function(req, res){
         var query = "select * from users where Uid = "+ req.query.uid;    connection.query(query, function(err, rows, fields) {
@@ -117,14 +110,10 @@ app.get('/signup', function(req, res) {
                                 }
                 });
 });
-//query by user id for getting the rest of a user's info
-<<<<<<< HEAD
+
 app.get('/user', function(req, res){
-        var query = "select * from users where Uid = "+ req.query.uid;    connection.query(query, function(err, rows, fields) {
-=======
-app.get('/user', function(req, res){//
         var query = "select * from users where Username = '"+ req.query.username+"'";    connection.query(query, function(err, rows, fields) {
->>>>>>> origin/master
+
         if (err) {
             console.log('Error: ' + err);
             res.status(404).send('Not kfound');
