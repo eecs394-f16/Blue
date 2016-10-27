@@ -61,7 +61,7 @@ app.get('/rentals', function (req, res) {
     connection.query(query, function (err, rows, fields) {
         if (err) {
             console.log('Error: ' + err);
-            res.status(404).send('Not found');
+            res.status(404).send('Notmeow found');
         } else {
             res.set('Access-Control-Allow-Origin', '*');
             res.set('Access-Control-Allow-Methods', '["GET"]');
@@ -71,12 +71,32 @@ app.get('/rentals', function (req, res) {
 });
 
 //query by user id
+<<<<<<< HEAD
 app.get('/rentals/posted', function (req, res) {
     var query = "select * from rentals where Uid2 = " + req.query.uid;
+=======
+/*
+app.get('/rentals', function (req, res) {//
+    var query = "select * from rentals where Uid1 = " + req.query.uid;
+>>>>>>> origin/master
     connection.query(query, function (err, rows, fields) {
         if (err) {
             console.log('Error: ' + err);
-            res.status(404).send('Not found');
+            res.status(404).send('Not afound');
+        } else {
+            res.set('Access-Control-Allow-Origin', '*');
+            res.set('Access-Control-Allow-Methods', '["GET"]');
+            res.json(rows);
+        }
+    });
+});
+*/
+
+app.get('/uid', function(req, res){
+        var query = "select * from users where Uid = "+ req.query.uid;    connection.query(query, function(err, rows, fields) {
+        if (err) {
+            console.log('Error: ' + err);
+            res.status(404).send('Not mfound');
         } else {
             res.set('Access-Control-Allow-Origin', '*');
             res.set('Access-Control-Allow-Methods', '["GET"]');
@@ -85,12 +105,29 @@ app.get('/rentals/posted', function (req, res) {
     });
 });
 
+app.get('/signup', function(req, res) {
+                var usr = req.query.username;
+                var query = "INSERT INTO users (Username) VALUES ('"+usr+"')";
+                connection.query(query, function(err,rows) {
+                                if (err) {
+                                                console.log('Error: ' +err);
+                                                res.status(404).json(err);
+                                } else {
+                                                res.json(rows);
+                                }
+                });
+});
 //query by user id for getting the rest of a user's info
+<<<<<<< HEAD
 app.get('/user', function(req, res){
         var query = "select * from users where Uid = "+ req.query.uid;    connection.query(query, function(err, rows, fields) {
+=======
+app.get('/user', function(req, res){//
+        var query = "select * from users where Username = '"+ req.query.username+"'";    connection.query(query, function(err, rows, fields) {
+>>>>>>> origin/master
         if (err) {
             console.log('Error: ' + err);
-            res.status(404).send('Not found');
+            res.status(404).send('Not kfound');
         } else {
             res.set('Access-Control-Allow-Origin', '*');
             res.set('Access-Control-Allow-Methods', '["GET"]');
@@ -120,11 +157,11 @@ app.get('/request', function(req, res) {
 });
 
 //query by user id for getting the my rentals
-app.get('/rentals', function(req, res){
-        var query = "select * , 'renter' from rentals where Uid1 = " + req.query.uid + " UNION select *, 'rentee' from rentals where uid2 = " + req.query.uid + " ORDER BY initialTime DESC";    connection.query(query, function(err, rows, fields) {
+app.get('/rentals', function(req, res){//
+        var query = "select * , 'renter' from rentals where Uid1 = " + req.query.uid + " UNION select *, 'rentee' from rentals where Uid2 = " + req.query.uid + " ORDER BY initialTime DESC";    connection.query(query, function(err, rows, fields) {
         if (err) {
             console.log('Error: ' + err);
-            res.status(404).send('Not found');
+            res.status(404).send('Not dfound');
         } else {
             res.set('Access-Control-Allow-Origin', '*');
             res.set('Access-Control-Allow-Methods', '["GET"]');
