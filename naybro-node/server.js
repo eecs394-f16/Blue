@@ -40,19 +40,6 @@ app.get('/name', function(req, res){
     });
 
 });
-app.get('/init', function(req, res){
-        var query = "select * from products ORDER BY rating DESC LIMIT 10";    connection.query(query, function(err, rows, fields) {
-        if (err) {
-            console.log('Error: ' + err);
-            res.status(404).send('Not found');
-        } else {
-            res.set('Access-Control-Allow-Origin', '*');
-            res.set('Access-Control-Allow-Methods', '["GET"]');
-            res.json(rows);
-        }
-    });
-
-});
 
 //query by product id for getting info for the details page
 app.get('/details', function(req, res){
@@ -70,7 +57,22 @@ app.get('/details', function(req, res){
 
 //query by user id
 app.get('/rentals', function (req, res) {
-    var query = "select * from rentals where Uid1 = " + req.query.userid;
+    var query = "select * from rentals where Uid1 = " + req.query.uid;
+    connection.query(query, function (err, rows, fields) {
+        if (err) {
+            console.log('Error: ' + err);
+            res.status(404).send('Not found');
+        } else {
+            res.set('Access-Control-Allow-Origin', '*');
+            res.set('Access-Control-Allow-Methods', '["GET"]');
+            res.json(rows);
+        }
+    });
+});
+
+//query by user id
+app.get('/rentals/posted', function (req, res) {
+    var query = "select * from rentals where Uid2 = " + req.query.uid;
     connection.query(query, function (err, rows, fields) {
         if (err) {
             console.log('Error: ' + err);
@@ -85,7 +87,7 @@ app.get('/rentals', function (req, res) {
 
 //query by user id for getting the rest of a user's info
 app.get('/user', function(req, res){
-        var query = "select * from users where Uid = "+ req.query.userid;    connection.query(query, function(err, rows, fields) {
+        var query = "select * from users where Uid = "+ req.query.uid;    connection.query(query, function(err, rows, fields) {
         if (err) {
             console.log('Error: ' + err);
             res.status(404).send('Not found');

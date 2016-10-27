@@ -114,7 +114,13 @@ angular
             
             supersonic.ui.dialog.confirm("", options).then(function(index) {
                 if (index === 0) {
-                    
+                    /*var options = {
+                        message: "Your request has been sent!",
+                        buttonLabel: "Close"
+                    };
+                    supersonic.ui.dialog.alert("Congratulations", options).then(function () {
+                        supersonic.logger.log("Alert closed");
+                    });*/
                     $scope.postRental();
                     supersonic.data.channel('rentalPost').publish("refresh");
                  } else {
@@ -149,12 +155,13 @@ angular
   .module('rental')
   .controller('LoginController', function($scope, supersonic, $http) {
 
-    $scope.navbarTitle = "Login";
-    $scope.logme = "I'm waiting!!";
-    //steroids.addon.facebook.ready.then(funtion(){
-     //$scope.logme = "Done";
-    console.log("Lolo not gonig to werk");
-    // });
+    $scope.fbusername= "Use Facebook Username";
+    $scope.logme = function(){
+      if($scope.fbusername.length > 0){
+        supersonic.ui.initialView.dismiss();
+      }
+    };
+
   });
 
 angular
@@ -213,6 +220,7 @@ angular
         $scope.loadRentals();
         supersonic.data.channel('changeTab').publish(1);
     });
+    
     $scope.rentalsResults = [];
 
     $scope.loadRentals = function () {
@@ -284,10 +292,20 @@ angular
   .module('rental')
   .controller('newListingController', function($scope, supersonic, $http) {
    
+   $scope.img = undefined;
    $scope.listing = undefined;
    $scope.update = function(listing) {
       
       supersonic.logger.debug(listing);
+      var image = document.getElementById('listingImg');
+      
+      var html= "<a class='item'> <img style='display: inline-block' class='img-mini' id='details-img' src='"+
+                  image.src + "' /> <table class='details detailsTable' style='display:inline-block> <tr> <td><i class='icon super-pricetag'></i></td> <td>" +
+                  listing.name + "</td> </tr><tr><td><i class='icon super-social-usd'></i></td><td>" +
+                  listing.rate + "/hr</td></tr><tr><td><i class='icon super-star'></i></td><td>Rating : " +
+                  0 + "</td> </tr> </table> </a>";
+                  
+       supersonic.data.channel('pseudoNewListing').publish(html);
    };
  
     supersonic.ui.views.current.whenVisible( function () {
@@ -301,6 +319,20 @@ angular
              $scope.username = response.data[0].Username;
           });
       });
+    
+    $scope.updateImg = function() {
+      
+      navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+         destinationType: Camera.DestinationType.DATA_URL
+      });
+    };
+   
+   function onSuccess(imageData) {
+      var image = document.getElementById('listingImg');
+      image.src = "data:image/jpeg;base64," + imageData;
+  }
+
+   function onFail(message) {}
     
     $scope.autoExpand = function(e) {
       var element = typeof e === 'object' ? e.target : document.getElementById(e);

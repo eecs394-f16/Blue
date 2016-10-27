@@ -24,6 +24,7 @@ angular
         $scope.loadRentals();
         supersonic.data.channel('changeTab').publish(1);
     });
+    
     $scope.rentalsResults = [];
 
     $scope.loadRentals = function () {

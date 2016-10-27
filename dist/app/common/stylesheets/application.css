@@ -46,8 +46,13 @@
 .details {
 	display: inline-block;
 }
-.details td {
+.detailsTable {
+	width: 70%;
+}
+.detailsTable td {
 	padding: 5px;
+	white-space: normal;
+	vertical-align: middle;
 }
 
 #details-name {
@@ -109,7 +114,8 @@
 .fb-login-div{
   position: fixed;
   top: 55%;
-  left:25%;
+  width: 60%;
+  left:20%;
 }
 .nb-title{
   font-size: 500%;
