@@ -7,7 +7,7 @@ angular
     }
     $scope.fbusername= "";
     $scope.logme = function(){
-      
+      supersonic.logger.debug(localStorage.getItem('user'));
       if(localStorage.getItem('user') === null){
         
         if($scope.fbusername.length > 0){

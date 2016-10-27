@@ -1,9 +1,24 @@
 angular
   .module('rental')
-  .controller('myAccountController', function ($scope) {
+  .controller('myAccountController', function ($scope,$http) {
       $scope.loadProfile = function () {
-          $scope.account = { 'name': 'Brian Walker', 'location': 'Evanston, IL', 'email': 'brian@nu.com', 'number': '(123) 567-789', 'description': 'I have many things to rent out' };
+          
+          $http({
+                method : "GET",
+                url : "http://naybro-node.mybluemix.net/uid",
+                params : {
+                    uid : parseInt(localStorage.getItem('user'))
+            }})
+            .then(function(response) {
+                supersonic.logger.debug(response);
+                $scope.username = response.data[0].Username;
+            });
+          $scope.account = { 'name': $scope.username, 'location': 'Evanston, IL', 'email': 'iwanttorent@nu.com', 'number': '(123) 567-789', 'description': 'I have many things to rent out' };
       };
+      
+      supersonic.ui.views.current.whenVisible( function () {
+        $scope.loadProfile();
+    });
 
       $scope.myThings = [
           {

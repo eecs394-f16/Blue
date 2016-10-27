@@ -32,7 +32,7 @@ angular
             method: "GET",
             url: "http://naybro-node.mybluemix.net/rentals",
             params: {
-                uid: 4
+                uid: parseInt(localStorage.getItem('user'))
             }
         }).then(function (response) {
             $scope.rentalsResults = response.data;
@@ -53,7 +53,7 @@ angular
                         }
                     }
                 });
-                if ($scope.rentalsResults[i].Uid1 != 4)
+                if ($scope.rentalsResults[i].Uid1 != parseInt(localStorage.getItem('user')))
                     $scope.rentalsResults[i].role = 'renter';
                 else
                     $scope.rentalsResults[i].role = 'rentee';
@@ -93,15 +93,36 @@ angular
         });
     };
 
+    $scope.acceptRentals = function(Rid) {
+      
+     $http({
+            method: "GET",
+            url: "http://naybro-node.mybluemix.net/rentals/accept",
+            params: {
+                rid: Rid
+            }});
+    };
+    
+    $scope.rejectRentals = function(Rid) {
+      
+     $http({
+            method: "GET",
+            url: "http://naybro-node.mybluemix.net/rentals/reject",
+            params: {
+                rid: Rid
+            }});
+    };
+    
     $scope.acceptRequest = function (Rid) {
         var options = {
             message: "Are you sure you want to accept this request?",
             buttonLabels: ["Yes", "No"]
         };
-        supersonic.ui.dialog.confirm("Accept?", options).then(function (index) {
+        supersonic.ui.dialog.confirm("Accept", options).then(function (index) {
             if (index == 0) {
-                $scope.loadRentals();
+                $scope.acceptRentals(Rid);
                 alert('ok you have accepted the request');
+                $scope.loadRentals();
             }
             else
                 alert('ok you have not accepted the request');
@@ -113,10 +134,11 @@ angular
             message: "Are you sure you want to reject this request?",
             buttonLabels: ["Yes", "No"]
         };
-        supersonic.ui.dialog.confirm("Reject?", options).then(function (index) {
+        supersonic.ui.dialog.confirm("Reject", options).then(function (index) {
             if (index == 0) {
-                $scope.loadRentals();
+                $scope.rejectRentals();
                 alert('ok you have rejected the request');
+                $scope.loadRentals();
             }
             else
                 alert('ok you have not rejected the request');

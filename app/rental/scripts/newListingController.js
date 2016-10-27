@@ -22,7 +22,7 @@ angular
           method : "GET",
           url : "http://naybro-node.mybluemix.net/uid",
           params : {
-              uid : 4
+              uid : localStorage.getItem('user')
           }}).then(function(response) {
           
              $scope.username = response.data[0].Username;

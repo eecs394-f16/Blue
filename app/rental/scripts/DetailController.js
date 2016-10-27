@@ -6,7 +6,7 @@ angular
       document.getElementById("datePicker").value = "2016-10-27";
       $scope.range = function (n) {
           return new Array(n);
-      }
+      };
 
     var _refreshListing = function () {
         
@@ -31,7 +31,7 @@ angular
                 }})
             .then(function(response) {
                 
-                $scope.username = 'Ginny'; //response.data[0].Username;
+                $scope.username = response.data[0].Username;
                 });
             });
        };
@@ -40,7 +40,7 @@ angular
               method: "GET",
               url: "http://naybro-node.mybluemix.net/rentals",
               params: {
-                  uid: 4
+                  uid: parseInt(localStorage.getItem('user'))
               }
           }).then(function (response) {
               $scope.rentalsResults = response.data;
@@ -76,17 +76,17 @@ angular
     });
     
     $scope.postRental = function() {
-        var date = document.getElementById('datePicker').value;
+        //var date = document.getElementById('datePicker').value;
         $http({
             method: 'GET',
             url: 'http://naybro-node.mybluemix.net/request',
             headers: { 'Content-Type': 'application/json' } ,
             params : {
-                uid1: $scope.searchResults.Uid,
+                uid1: parseInt(localStorage.getItem('user')),
                 pid: $scope.productId,
-                uid2: 4,
-                hours: 6,
-                date: date
+                uid2: $scope.searchResults.Uid,
+                hours: 6
+                //date: date
                 }
             }).then(function(response) {
                     supersonic.logger.debug(response);
@@ -101,7 +101,7 @@ angular
         supersonic.ui.tabs.select(index);
     });
     $scope.rentItem = function() {
-        alert();
+
         var options = {
             message: "Confirm to rent item ?",
             buttonLabels: ["Yes", "No"]
