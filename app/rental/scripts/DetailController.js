@@ -2,7 +2,11 @@ angular
   .module('rental')
   .controller('DetailController', function($scope, supersonic, $http) {
 
-    $scope.productId = undefined;
+      $scope.productId = undefined;
+      document.getElementById("datePicker").value = "2016-10-27";
+      $scope.range = function (n) {
+          return new Array(n);
+      }
 
     var _refreshListing = function () {
         
@@ -12,12 +16,12 @@ angular
             params: {
                 pid : $scope.productId
             }})
-        .then(function(response) {
-                
+        .then(function (response) {
             $scope.searchResults = response.data[0];
             $scope.productName = $scope.searchResults.Name;
             $scope.productRate = $scope.searchResults.Rate;
             $scope.productDescription = $scope.searchResults.Description;
+            $scope.productRating = parseInt($scope.searchResults.Rating);
             $scope.img = $scope.searchResults.Img;
             $http({
                 method : "GET",
@@ -27,7 +31,7 @@ angular
                 }})
             .then(function(response) {
                 
-                $scope.username = response.data[0].Username;
+                $scope.username = 'Ginny'; //response.data[0].Username;
                 });
             });
        };
@@ -72,7 +76,7 @@ angular
     });
     
     $scope.postRental = function() {
-        
+        var date = document.getElementById('datePicker').value;
         $http({
             method: 'GET',
             url: 'http://naybro-node.mybluemix.net/request',
@@ -81,7 +85,8 @@ angular
                 uid1: $scope.searchResults.Uid,
                 pid: $scope.productId,
                 uid2: 4,
-                hours: 6
+                hours: 6,
+                date: date
                 }
             }).then(function(response) {
                     supersonic.logger.debug(response);
@@ -96,7 +101,7 @@ angular
         supersonic.ui.tabs.select(index);
     });
     $scope.rentItem = function() {
-
+        alert();
         var options = {
             message: "Confirm to rent item ?",
             buttonLabels: ["Yes", "No"]
