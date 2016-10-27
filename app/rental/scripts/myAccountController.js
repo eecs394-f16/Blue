@@ -14,5 +14,11 @@ angular
           }
       ];
       
+      supersonic.data.channel('pseudoNewListing').subscribe(function(html){
       
+      
+        document.getElementById("cheat").innerHTML = document.getElementById("cheat").innerHTML + html;
+        supersonic.ui.tabs.select(2);
+        supersonic.data.channel('pseudoDone').publish();
+      });
   });

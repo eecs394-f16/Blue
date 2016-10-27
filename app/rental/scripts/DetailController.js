@@ -21,7 +21,7 @@ angular
             $scope.img = $scope.searchResults.Img;
             $http({
                 method : "GET",
-                url : "http://naybro-node.mybluemix.net/user",
+                url : "http://naybro-node.mybluemix.net/uid",
                 params : {
                     uid : $scope.searchResults.Uid
                 }})

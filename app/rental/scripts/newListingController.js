@@ -9,19 +9,18 @@ angular
       supersonic.logger.debug(listing);
       var image = document.getElementById('listingImg');
       
-      var html= "<a class='item'> <img style='display: inline-block' class='img-mini' id='details-img' src='"+
-                  image.src + "' /> <table class='details detailsTable' style='display:inline-block> <tr> <td><i class='icon super-pricetag'></i></td> <td>" +
-                  listing.name + "</td> </tr><tr><td><i class='icon super-social-usd'></i></td><td>" +
-                  listing.rate + "/hr</td></tr><tr><td><i class='icon super-star'></i></td><td>Rating : " +
-                  0 + "</td> </tr> </table> </a>";
+      var html= "<a class='item'> <img style='display: inline-block' class='img-mini' id='details-img' src='"+image.src+"' /> <table class='details detailsTable' style='display:inline-block'> <tr> <td><i class='icon super-pricetag'></i></td> <td>"+listing.name+"</td> </tr><tr><td><i class='icon super-social-usd'></i></td><td>"+listing.rate+"/hr</td></tr><tr><td><i class='icon super-star'></i></td><td>Rating : 0</td> </tr> </table> </a>";
                   
        supersonic.data.channel('pseudoNewListing').publish(html);
+       supersonic.data.channel('pseudoDone').subscribe(function(){
+         supersonic.ui.layers.pop();
+       });  
    };
  
     supersonic.ui.views.current.whenVisible( function () {
           $http({
           method : "GET",
-          url : "http://naybro-node.mybluemix.net/user",
+          url : "http://naybro-node.mybluemix.net/uid",
           params : {
               uid : 4
           }}).then(function(response) {
