@@ -9,7 +9,7 @@ angular
     $scope.logme = function(){
 
       if(localStorage.getItem('user') === null){
-        
+
         if($scope.fbusername.length > 0){
           $http({
                         method : "GET",
@@ -34,6 +34,10 @@ angular
 
                         }
                       });
+        }
+        else{
+          alert("Please enter username");
+          $scope.hideMe = false;
         }
       }
       else{
