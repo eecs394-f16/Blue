@@ -2,10 +2,11 @@ angular
   .module('rental')
   .controller('LoginController', function($scope, supersonic, $http) {
 
-    $scope.navbarTitle = "Login";
-    $scope.logme = "I'm waiting!!";
-    //steroids.addon.facebook.ready.then(funtion(){
-     //$scope.logme = "Done";
-    console.log("Lolo not gonig to werk");
-    // });
+    $scope.fbusername= "Use Facebook Username";
+    $scope.logme = function(){
+      if($scope.fbusername.length > 0){
+        supersonic.ui.initialView.dismiss();
+      }
+    };
+
   });
