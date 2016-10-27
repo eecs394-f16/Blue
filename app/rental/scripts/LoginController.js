@@ -6,10 +6,11 @@ angular
       $scope.hideMe = false;
     }
     $scope.fbusername= "";
-    $scope.logme = function(){      //if the box isnt empty
-      if($scope.fbusername.length > 0){
-        //if no userid is found in local storage
-        if(localStorage.getItem('user') === null){
+    $scope.logme = function(){
+      
+      if(localStorage.getItem('user') === null){
+        
+        if($scope.fbusername.length > 0){
           $http({
                         method : "GET",
                         url : "http://naybro-node.mybluemix.net/user",
@@ -34,13 +35,9 @@ angular
                         }
                       });
         }
-        else{
-          supersonic.ui.initialView.dismiss();
-        }
-
-
       }
-
+      else{
+        supersonic.ui.initialView.dismiss();
+      }
     };
-
   });
