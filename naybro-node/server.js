@@ -70,7 +70,7 @@ app.get('/details', function(req, res){
 
 //query by user id
 app.get('/rentals', function (req, res) {
-    var query = "select * from rentals where Uid1 = " + req.query.uid;
+    var query = "(select * from rentals where Uid1 = " + req.query.uid+ ") Union (select * from rentals where Uid2="+req.query.uid+")";
     connection.query(query, function (err, rows, fields) {
         if (err) {
             console.log('Error: ' + err);
