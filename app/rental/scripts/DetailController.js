@@ -158,8 +158,15 @@ angular
             supersonic.ui.dialog.alert("Oops!", options).then(function () {
                 supersonic.logger.log("Alert closed");
             });
-        }
-        else {
+        } else if ($scope.searchResults.Uid == parseInt(localStorage.getItem('user'))) {
+            var options = {
+                message: 'This is your listing!',
+                buttonLabel: 'Close'
+            };
+            supersonic.ui.dialog.alert("Oops!", options).then(function () {
+                supersonic.logger.log("Alert closed");
+            })
+        } else {
 
             var options = {
                 message: "Confirm to rent item ?",
