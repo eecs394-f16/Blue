@@ -4,6 +4,7 @@ angular
     newListingBtn = new supersonic.ui.NavigationBarButton({
       onTap: function() {
       localStorage.removeItem('user');
+      alert("Successfully logged out");
       supersonic.ui.initialView.show();
       },
       styleId: "nav-logout"
