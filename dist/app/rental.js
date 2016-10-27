@@ -114,13 +114,13 @@ angular
             
             supersonic.ui.dialog.confirm("", options).then(function(index) {
                 if (index === 0) {
-                    /*var options = {
+                    var options = {
                         message: "Your request has been sent!",
                         buttonLabel: "Close"
                     };
                     supersonic.ui.dialog.alert("Congratulations", options).then(function () {
                         supersonic.logger.log("Alert closed");
-                    });*/
+                    });
                     $scope.postRental();
                     supersonic.data.channel('rentalPost').publish("refresh");
                  } else {
@@ -154,12 +154,42 @@ angular
 angular
   .module('rental')
   .controller('LoginController', function($scope, supersonic, $http) {
-
-    $scope.fbusername= "Use Facebook Username";
-    $scope.logme = function(){
+    $scope.fbusername= "";
+    $scope.logme = function(){      //if the box isnt empty
       if($scope.fbusername.length > 0){
-        supersonic.ui.initialView.dismiss();
+        //if no userid is found in local storage
+        if(localStorage.getItem('user') === null){
+          $http({
+                        method : "GET",
+                        url : "http://naybro-node.mybluemix.net/user",
+                        params : {
+                            username : $scope.fbusername
+                        }})
+                    .then(function(response) {
+                        if(response.data.length){
+                          $scope.uid = response.data[0].Uid;
+                          localStorage.setItem('user', $scope.uid );
+                          $scope.logme();
+                        }
+                        else{
+                          $http({
+                            method : "GET",
+                            url : "http://naybro-node.mybluemix.net/signup",
+                            params : {
+                              username : $scope.fbusername
+                            }})
+                            $scope.logme();
+
+                        }
+                      });
+        }
+        else{
+          supersonic.ui.initialView.dismiss();
+        }
+
+
       }
+
     };
 
   });
@@ -170,9 +200,19 @@ angular
 
     $scope.navbarTitle = "Search";
     $scope.searchResult = undefined;
+    document.activeElement.blur(); 
+     $http({
+      method : "GET",
+      url : "http://naybro-node.mybluemix.net/init",
+      params: {
+      productName : $scope.searchInput
+      }})
+    .then(function(response) {
+      $scope.searchResults = response.data;
+    });
     $scope.getInput = function() {
 
-        document.activeElement.blur(); 
+        document.activeElement.blur();
          $http({
           method : "GET",
           url : "http://naybro-node.mybluemix.net/name",
@@ -180,10 +220,10 @@ angular
           productName : $scope.searchInput
           }})
         .then(function(response) {
-          
+
           $scope.searchResults = response.data;
         });
-        
+
     };
   });
 
@@ -193,6 +233,17 @@ angular
       $scope.loadProfile = function () {
           $scope.account = { 'name': 'Brian Walker', 'location': 'Evanston, IL', 'email': 'brian@nu.com', 'number': '(123) 567-789', 'description': 'I have many things to rent out' };
       };
+
+      $scope.myThings = [
+          {
+              'Name': 'Skateboard',
+              'Img': 'http://www.bonkersenergy.com/wp-content/uploads/2015/07/skateboard_01.jpg',
+              'Rate': 5,
+              'Rating': 5
+          }
+      ];
+      
+      
   });
 angular
   .module('rental')
@@ -249,13 +300,20 @@ angular
                         }
                     }
                 });
+                if ($scope.rentalsResults[i].Uid1 != 4)
+                    $scope.rentalsResults[i].role = 'renter';
+                else
+                    $scope.rentalsResults[i].role = 'rentee';
                 $scope.date = new Date($scope.rentalsResults[i].initialTime);
                 $scope.rentalsResults[i].initialTime = $scope.date.toLocaleString();
+                $scope.rentalsResults[i].action = "hidden"
                 switch ($scope.rentalsResults[i].status) {
                     case 'requested':
                         $scope.rentalsResults[i].statusBefore = '';
                         $scope.rentalsResults[i].statusClass = 'orange';
                         $scope.rentalsResults[i].statusAfter = '/confirmed/in use/returned/rated';
+                        if ($scope.rentalsResults[i].role == 'rentee')
+                            $scope.rentalsResults[i].action = 'visible';
                         break;
                     case 'confirm': case 'confirmed':
                         $scope.rentalsResults[i].statusBefore = 'requested/';
@@ -281,9 +339,38 @@ angular
             }
         });
     };
+
+    $scope.acceptRequest = function (Rid) {
+        var options = {
+            message: "Are you sure you want to accept this request?",
+            buttonLabels: ["Yes", "No"]
+        };
+        supersonic.ui.dialog.confirm("Accept?", options).then(function (index) {
+            if (index == 0) {
+                $scope.loadRentals();
+                alert('ok you have accepted the request');
+            }
+            else
+                alert('ok you have not accepted the request');
+        });
+    }
+
+    $scope.rejectRequest = function (Rid) {
+        var options = {
+            message: "Are you sure you want to reject this request?",
+            buttonLabels: ["Yes", "No"]
+        };
+        supersonic.ui.dialog.confirm("Reject?", options).then(function (index) {
+            if (index == 0) {
+                $scope.loadRentals();
+                alert('ok you have rejected the request');
+            }
+            else
+                alert('ok you have not rejected the request');
+        });
+    }
            
     supersonic.ui.views.current.whenVisible( function () {
-      
       $scope.loadRentals();
     });
   });

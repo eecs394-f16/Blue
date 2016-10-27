@@ -50,6 +50,32 @@
             </table>
         </div>
     </div>
+    <div class="productsContainer">
+        <h3>My Listings</h3>
+        <ul>
+            <li ng-repeat="result in myThings">
+                <super-navigate>
+                    <a class="item">
+                        <img style='display: inline-block' class='img-mini' id='details-img' src='{{result.Img}}' />
+                        <table class="details detailsTable" style='display:inline-block'>
+                            <tr>
+                                <td><i class="icon super-pricetag"></i></td>
+                                <td>{{result.Name}}</td>
+                            </tr>
+                            <tr>
+                                <td><i class="icon super-social-usd"></i></td>
+                                <td>{{result.Rate}}/hr</td>
+                            </tr>
+                            <tr>
+                                <td><i class="icon super-star"></i></td>
+                                <td>Rating : {{result.Rating}}</td>
+                            </tr>
+                        </table>
+                    </a>
+                </super-navigate>
+            </li>
+        </ul>
+    </div>
 </div>
 
 

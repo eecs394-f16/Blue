@@ -1,7 +1,7 @@
 angular
   .module('rental')
   .controller('LoginController', function($scope, supersonic, $http) {
-    $scope.fbusername= "Use Facebook Username";
+    $scope.fbusername= "";
     $scope.logme = function(){      //if the box isnt empty
       if($scope.fbusername.length > 0){
         //if no userid is found in local storage
