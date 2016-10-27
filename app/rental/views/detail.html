@@ -1,3 +1,22 @@
+<style>
+    .timeTable {
+        width: 100%;
+    }
+    .timeTable td {
+        padding: 5px;
+        text-align: center;
+        color: #ffffff;
+    }
+    .unselected {
+        background-color: #199b1a;
+    }
+    .selected {
+        background-color: #ff0000;
+    }
+    .locked {
+        background-color: #808080;
+    }
+</style>
 <div ng-controller="DetailController"  ng-attr-location="rental#detail">
 
 	<super-navbar>
@@ -27,8 +46,31 @@
             </tr>
             <tr>
                 <td><i class="icon super-calendar"></i></td>
-                <td><input style="display: inline-block" id="datePicker" type="date"/><div style="visibility: hidden; color: #199b1a; padding-left: 5px; display: inline-block">Available!</div></td>
+                <td><input ng-change="changeDate()" ng-model="selectedDate" style="display: inline-block" id="datePicker" type="date"/><div style="visibility: hidden; color: #199b1a; padding-left: 5px; display: inline-block">Available!</div></td>
             </tr>
 		</table>
+        <table class="timeTable">
+            <tr>
+                <td id="9" class="unselected" ng-click="select('9')">9AM</td>
+                <td id="10" class="unselected" ng-click="select('10')">10AM</td>
+                <td id="11" class="unselected" ng-click="select('11')">11AM</td>
+                <td id="12" class="unselected" ng-click="select('12')">12PM</td>
+                <td id="13" class="unselected" ng-click="select('13')">1PM</td>
+            </tr>
+            <tr>
+                <td id="14" class="unselected" ng-click="select('14')">2PM</td>
+                <td id="15" class="unselected" ng-click="select('15')">3PM</td>
+                <td id="16" class="unselected" ng-click="select('16')">4PM</td>
+                <td id="17" class="unselected" ng-click="select('17')">5PM</td>
+                <td id="18" class="unselected" ng-click="select('18')">6PM</td>
+            </tr>
+            <tr>
+                <td id="19" class="unselected" ng-click="select('19')">7PM</td>
+                <td id="20" class="unselected" ng-click="select('20')">8PM</td>
+                <td id="21" class="unselected" ng-click="select('21')">9PM</td>
+                <td id="22" class="unselected" ng-click="select('22')">10PM</td>
+                <td id="23" class="unselected" ng-click="select('23')">11PM</td>
+            </tr>
+        </table>
 	<button class="button button-block button-positive" ng-click="rentItem()">Rent now!</button>
 </div>

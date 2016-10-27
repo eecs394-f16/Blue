@@ -3,20 +3,58 @@ angular
   .controller('DetailController', function($scope, supersonic, $http) {
 
       $scope.productId = undefined;
-      document.getElementById("datePicker").value = "2016-10-27";
+      $scope.selectedDate = "2016-10-27";
+      document.getElementById("datePicker").value = $scope.selectedDate;
       $scope.range = function (n) {
           return new Array(n);
       };
 
-    var _refreshListing = function () {
-        
+      $scope.changeDate = function () {
+          getDates();
+      }
+
+      var getDates = function () {
+          for (var i = 9; i < 24; i++) {
+              document.getElementById(i).className = "unselected";
+          }
+          $http({
+              method: "GET",
+              url: "http://naybro-node.mybluemix.net/date",
+              params: {
+                  pid: $scope.productId,
+                  date: $scope.selectedDate
+              }
+          }).then(function (response) {
+
+              var currentBookings = response.data;
+              for (var i = 0; i < currentBookings.length; i++) {
+                  var dateObj = new Date(currentBookings[i].initialTime);
+                  var start = dateObj.getHours();
+                  for (var j = start; j < parseInt(start + currentBookings[i].hoursRented) ; j++) {
+                      if (j > 23)
+                          break;
+                      document.getElementById(j).className = "locked";
+                  }
+              }
+          });
+      };
+
+      $scope.select = function (id) {
+          if (document.getElementById(id).className == 'unselected')
+              document.getElementById(id).className = "selected";
+          else if (document.getElementById(id).className == 'selected')
+              document.getElementById(id).className = "unselected";
+      }
+
+      var _refreshListing = function () {
+          getDates();
         $http({
             method : "GET",
             url : "http://naybro-node.mybluemix.net/details",
             params: {
-                pid : $scope.productId
-            }})
-        .then(function (response) {
+                pid: $scope.productId
+            }
+        }).then(function (response) {
             $scope.searchResults = response.data[0];
             $scope.productName = $scope.searchResults.Name;
             $scope.productRate = $scope.searchResults.Rate;
@@ -76,7 +114,18 @@ angular
     });
     
     $scope.postRental = function() {
-        //var date = document.getElementById('datePicker').value;
+        var start = 9;
+        var hours = 0;
+        for (var i = 9; i < 24; i++) {
+            if (document.getElementById(i).className == "selected") {
+                if (hours == 0) {
+                    start = i;
+                }
+                hours++;
+            }
+        }
+        var date = new Date();
+        date.setHours(start, 0, 0, 0);
         $http({
             method: 'GET',
             url: 'http://naybro-node.mybluemix.net/request',
@@ -85,8 +134,8 @@ angular
                 uid1: parseInt(localStorage.getItem('user')),
                 pid: $scope.productId,
                 uid2: $scope.searchResults.Uid,
-                hours: 6
-                //date: date
+                hours: hours,
+                date: $scope.selectedDate + ' ' + date.toISOString().slice(11, 19)
                 }
             }).then(function(response) {
                     supersonic.logger.debug(response);
@@ -101,13 +150,23 @@ angular
         supersonic.ui.tabs.select(index);
     });
     $scope.rentItem = function() {
-
-        var options = {
-            message: "Confirm to rent item ?",
-            buttonLabels: ["Yes", "No"]
+        if (document.getElementsByClassName('selected').length == 0) {
+            var options = {
+                message: 'You have not selected your times.',
+                buttonLabel: 'Close'
             };
-            
-            supersonic.ui.dialog.confirm("", options).then(function(index) {
+            supersonic.ui.dialog.alert("Oops!", options).then(function () {
+                supersonic.logger.log("Alert closed");
+            });
+        }
+        else {
+
+            var options = {
+                message: "Confirm to rent item ?",
+                buttonLabels: ["Yes", "No"]
+            };
+
+            supersonic.ui.dialog.confirm("", options).then(function (index) {
                 if (index === 0) {
                     var options = {
                         message: "Your request has been sent!",
@@ -118,9 +177,10 @@ angular
                     });
                     $scope.postRental();
                     supersonic.data.channel('rentalPost').publish("refresh");
-                 } else {
-                        supersonic.logger.log("no rent");
-                        }
-                });
-            };
+                } else {
+                    supersonic.logger.log("no rent");
+                }
+            });
+        }
+    };
   });
